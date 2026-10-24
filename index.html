@@ -1,0 +1,1747 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panamá Oeste: Más Fuertes, Más Unidos, Más Empáticos | Prevención y Esperanza Sísmica</title>
+    
+    <!-- Meta SEO & Social Sharing -->
+    <meta name="description" content="Mural interactivo y pedagógico para estudiantes, familias, docentes y la comunidad de Panamá Oeste tras el sismo del 09 de octubre. Guía sobre qué hacer mientras y después de un sismo, cuento ilustrado, apoyo emocional y actividades familiares.">
+    <meta name="theme-color" content="#1D4ED8">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome 6 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Google Fonts Nunito -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'vibrant-blue': '#1D4ED8',    
+                        'vibrant-cyan': '#06B6D4',    
+                        'vibrant-green': '#10B981',   
+                        'vibrant-yellow': '#FBBF24',  
+                        'vibrant-orange': '#F97316',  
+                        'vibrant-coral': '#F43F5E',   
+                        'vibrant-dark': '#0F172A',
+                    },
+                    fontFamily: {
+                        sans: ['Nunito', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        '3d-btn': '0 8px 0px 0px rgba(0,0,0,0.2), 0 15px 20px 0px rgba(0,0,0,0.2)',
+                        '3d-btn-active': '0 0px 0px 0px rgba(0,0,0,0.2), 0 5px 10px 0px rgba(0,0,0,0.2)',
+                        '3d-card': '0 20px 0px -10px rgba(0,0,0,0.1), 0 25px 30px -10px rgba(0,0,0,0.2)',
+                        'inner-light': 'inset 0 4px 6px rgba(255,255,255,0.5)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { 
+            font-family: 'Nunito', sans-serif; 
+            background: linear-gradient(135deg, #DBEAFE 0%, #EFF6FF 100%);
+            color: #1E293B;
+            overflow-x: hidden; 
+        }
+
+        /* 3D Elements */
+        .btn-3d {
+            transition: all 0.1s cubic-bezier(0.4, 0, 0.2, 1);
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+            position: relative;
+            top: 0;
+        }
+        .btn-3d:active {
+            top: 8px;
+            box-shadow: 0 0px 0px 0px rgba(0,0,0,0.2), 0 5px 10px 0px rgba(0,0,0,0.2) !important;
+        }
+        
+        .card-3d {
+            background: #ffffff;
+            border-radius: 2rem;
+            border: 4px solid white;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card-3d:hover {
+            transform: translateY(-8px);
+        }
+
+        .icon-3d {
+            filter: drop-shadow(0px 10px 8px rgba(0,0,0,0.25));
+        }
+
+        /* Contornos de texto */
+        .text-outline {
+            text-shadow: 2px 2px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+        }
+
+        /* Animaciones */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(2deg); }
+        }
+        .animate-float { animation: float 6s ease-in-out infinite; }
+
+        @keyframes pulse-ring {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(251, 191, 36, 0.7); }
+            70% { transform: scale(1.05); box-shadow: 0 0 0 20px rgba(251, 191, 36, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(251, 191, 36, 0); }
+        }
+        .animate-pulse-ring { animation: pulse-ring 2s infinite; }
+
+        @keyframes pop-in {
+            0% { opacity: 0; transform: scale(0.5) translateY(20px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        .leaf-anim { animation: pop-in 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 14px; }
+        ::-webkit-scrollbar-track { background: #DBEAFE; }
+        ::-webkit-scrollbar-thumb { background: #2563EB; border-radius: 10px; border: 3px solid #DBEAFE; }
+        ::-webkit-scrollbar-thumb:hover { background: #1D4ED8; }
+
+        /* Estilos específicos del Árbol de la Esperanza 3D */
+        .leaf-shape {
+            border-radius: 0 20px 0 20px; 
+            cursor: pointer;
+        }
+        
+        .tree-canopy-container {
+            position: relative;
+            width: 100%;
+            max-width: 720px;
+            margin: 0 auto;
+        }
+        
+        .tree-canopy-bg {
+            position: relative;
+            background: radial-gradient(circle at 30% 30%, #22c55e 0%, #15803d 80%, #14532d 100%);
+            box-shadow: inset -10px -20px 30px rgba(0,0,0,0.3), 0 20px 30px rgba(0,0,0,0.3);
+            border-radius: 50% 50% 40% 40% / 60% 60% 40% 40%;
+            z-index: 10;
+        }
+        
+        .tree-canopy-bg::before {
+            content: '';
+            position: absolute;
+            top: -10%; left: -5%;
+            width: 50%; height: 60%;
+            background: radial-gradient(circle at 30% 30%, #22c55e 0%, #16a34a 100%);
+            border-radius: 50%;
+            z-index: -1;
+        }
+        .tree-canopy-bg::after {
+            content: '';
+            position: absolute;
+            top: -5%; right: -10%;
+            width: 60%; height: 70%;
+            background: radial-gradient(circle at 30% 30%, #16a34a 0%, #15803d 100%);
+            border-radius: 50%;
+            z-index: -1;
+        }
+
+        .tree-trunk {
+            background: linear-gradient(to right, #78350f 0%, #b45309 30%, #92400e 70%, #451a03 100%);
+            box-shadow: inset 10px 0 20px rgba(0,0,0,0.4), 10px 10px 15px rgba(0,0,0,0.2);
+            position: relative;
+        }
+        .tree-trunk::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 20%;
+            width: 10%; height: 100%;
+            background: rgba(0,0,0,0.15);
+            border-radius: 10px;
+        }
+        .tree-trunk::after {
+            content: '';
+            position: absolute;
+            top: 10%; right: 25%;
+            width: 8%; height: 80%;
+            background: rgba(0,0,0,0.1);
+            border-radius: 10px;
+        }
+
+        .tree-root {
+            background: linear-gradient(to bottom, #78350f, #451a03);
+            box-shadow: 5px 5px 10px rgba(0,0,0,0.3);
+        }
+        
+        .reading-highlight {
+            background-color: #FEF08A !important;
+            color: #854D0E !important;
+            border-radius: 0.5rem;
+            padding: 0.25rem 0.5rem;
+            box-shadow: 0 0 15px rgba(251, 191, 36, 0.4);
+            transition: all 0.3s ease;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-vibrant-yellow selection:text-vibrant-dark">
+
+    <!-- BARRA DE NAVEGACIÓN SUPERIOR (STICKY) -->
+    <nav id="top-nav" class="sticky top-0 z-40 bg-white/95 backdrop-blur-md shadow-md border-b-4 border-vibrant-yellow transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between gap-3">
+            <a href="#inicio" class="flex items-center gap-2.5 text-vibrant-blue font-black text-lg md:text-xl tracking-tight hover:opacity-90 transition-opacity">
+                <span class="w-10 h-10 rounded-full bg-vibrant-yellow text-vibrant-dark flex items-center justify-center shadow text-lg border-2 border-white">
+                    <i class="fas fa-shield-heart text-vibrant-coral"></i>
+                </span>
+                <span class="flex flex-col text-left">
+                    <span class="leading-none text-vibrant-blue font-black text-base sm:text-lg">PANAMÁ OESTE</span>
+                    <span class="text-xs font-bold text-gray-500">Unidos & Preparados</span>
+                </span>
+            </a>
+
+            <!-- Enlaces Rápidos (Desktop) -->
+            <div class="hidden xl:flex items-center gap-2 text-xs font-black uppercase tracking-wider text-gray-700">
+                <a href="#durante-sismo" class="px-3 py-1.5 rounded-full hover:bg-orange-100 hover:text-vibrant-orange transition-colors">Durante el Sismo</a>
+                <a href="#despues-sismo" class="px-3 py-1.5 rounded-full hover:bg-blue-100 hover:text-vibrant-blue transition-colors">Después del Sismo</a>
+                <a href="#punto-encuentro" class="px-3 py-1.5 rounded-full hover:bg-cyan-100 hover:text-vibrant-cyan transition-colors">Punto de Encuentro</a>
+                <a href="#mochila" class="px-3 py-1.5 rounded-full hover:bg-yellow-100 hover:text-amber-600 transition-colors">Mochila</a>
+                <a href="#emociones" class="px-3 py-1.5 rounded-full hover:bg-rose-100 hover:text-vibrant-coral transition-colors">Emociones</a>
+                <a href="#cuento" class="px-3 py-1.5 rounded-full hover:bg-emerald-100 hover:text-vibrant-green transition-colors">Cuento Ilustrado</a>
+                <a href="#arbol-esperanza" class="px-3 py-1.5 rounded-full hover:bg-green-100 hover:text-green-700 transition-colors">Árbol</a>
+                <a href="#en-familia" class="px-3 py-1.5 rounded-full hover:bg-pink-100 hover:text-pink-600 transition-colors">Familia</a>
+                <a href="#emergencias" class="px-3 py-1.5 rounded-full bg-red-100 text-red-600 hover:bg-red-200 transition-colors font-extrabold">Emergencias</a>
+            </div>
+
+            <!-- Controles Rápidos de Sonido & Ayuda -->
+            <div class="flex items-center gap-2">
+                <button onclick="toggleMute()" id="nav-mute-btn" class="px-3 py-2 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs font-black flex items-center gap-2 border border-gray-300 transition-all focus:outline-none focus:ring-2 focus:ring-vibrant-yellow shadow-sm" title="Activar/Silenciar Narración y Efectos">
+                    <i class="fas fa-volume-mute text-gray-500" id="nav-mute-icon"></i>
+                    <span id="nav-mute-text" class="hidden md:inline">Sonido silenciado</span>
+                </button>
+                <a href="#emergencias" class="text-xs font-black bg-vibrant-coral hover:bg-rose-600 text-white px-3.5 py-2 rounded-full shadow flex items-center gap-1.5 transition-colors">
+                    <i class="fas fa-phone-volume animate-pulse"></i> <span>911</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- CONTROLES FLOTANTES GLOBALES (Sonido & Scroll Top) -->
+    <div class="fixed bottom-6 right-6 z-50 flex flex-col gap-3">
+        <!-- Volver Arriba -->
+        <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" id="scroll-top-btn" class="w-12 h-12 rounded-full bg-white text-vibrant-blue shadow-3d-btn flex items-center justify-center text-lg btn-3d mx-auto border-2 border-vibrant-blue opacity-0 pointer-events-none transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-yellow-400" aria-label="Volver al inicio" title="Subir al inicio">
+            <i class="fas fa-chevron-up"></i>
+        </button>
+
+        <!-- Audio Mute / Unmute -->
+        <button onclick="toggleMute()" id="mute-btn" class="w-16 h-16 rounded-full bg-gray-500 shadow-3d-btn flex items-center justify-center text-2xl text-white btn-3d border-4 border-white focus:outline-none focus:ring-4 focus:ring-yellow-400" aria-label="Activar o desactivar sonido" title="Activar/Silenciar sonido">
+            <i class="fas fa-volume-mute" id="mute-icon"></i>
+        </button>
+
+        <!-- Stop Audio -->
+        <button onclick="stopAudio()" class="w-12 h-12 rounded-full bg-vibrant-coral shadow-3d-btn flex items-center justify-center text-xl text-white btn-3d mx-auto border-2 border-white focus:outline-none focus:ring-4 focus:ring-yellow-400" aria-label="Detener narración" title="Detener audio en curso">
+            <i class="fas fa-stop"></i>
+        </button>
+    </div>
+
+    <!-- MODAL REUTILIZABLE DE INFORMACIÓN -->
+    <div id="custom-modal" class="fixed inset-0 bg-vibrant-dark/90 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm transition-opacity duration-300">
+        <div class="card-3d p-8 md:p-12 max-w-xl w-full transform scale-95 transition-transform duration-300 text-center shadow-2xl flex flex-col max-h-[90vh] overflow-y-auto" id="modal-content">
+            <div id="modal-icon" class="text-7xl mb-6 icon-3d flex-shrink-0"></div>
+            <h3 id="modal-title" class="text-3xl font-black mb-4"></h3>
+            <p id="modal-message" class="text-xl font-bold text-gray-700 mb-8 leading-relaxed"></p>
+            <button onclick="closeModal()" class="btn-3d bg-vibrant-cyan hover:bg-cyan-400 shadow-3d-btn text-white font-black py-4 px-10 rounded-full w-full text-2xl uppercase border-2 border-white focus:outline-none focus:ring-4 focus:ring-yellow-400 mt-auto">
+                ¡Entendido! <i class="fas fa-check-circle ml-2"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- MODAL REUTILIZABLE DE CONFIRMACIÓN -->
+    <div id="confirm-modal" class="fixed inset-0 bg-vibrant-dark/90 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm transition-opacity duration-300">
+        <div class="card-3d p-8 md:p-10 max-w-lg w-full transform scale-95 transition-transform duration-300 text-center shadow-2xl" id="confirm-content">
+            <i class="fas fa-question-circle text-7xl mb-6 text-vibrant-orange icon-3d"></i>
+            <h3 id="confirm-title" class="text-3xl font-black text-vibrant-dark mb-4">¿Deseas reiniciar?</h3>
+            <p id="confirm-message" class="text-xl font-bold text-gray-600 mb-8 leading-relaxed"></p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <button onclick="closeConfirmModal(false)" class="btn-3d flex-1 bg-gray-500 hover:bg-gray-600 text-white font-black py-4 px-6 rounded-xl text-xl shadow-md border-2 border-white focus:outline-none focus:ring-4 focus:ring-yellow-400">
+                    Cancelar
+                </button>
+                <button onclick="closeConfirmModal(true)" class="btn-3d flex-1 bg-vibrant-coral hover:bg-coral-500 text-white font-black py-4 px-6 rounded-xl text-xl shadow-md border-2 border-white focus:outline-none focus:ring-4 focus:ring-yellow-400">
+                    Sí, confirmar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL LIGHTBOX PARA LA ILUSTRACIÓN DEL CUENTO -->
+    <div id="image-lightbox-modal" class="fixed inset-0 bg-black/90 z-50 hidden flex items-center justify-center p-4 backdrop-blur-md transition-opacity duration-300" onclick="closeImageLightbox()">
+        <div class="relative max-w-5xl w-full max-h-[92vh] flex flex-col items-center" onclick="event.stopPropagation()">
+            <button onclick="closeImageLightbox()" class="absolute -top-12 right-0 text-white text-3xl hover:text-vibrant-yellow transition-colors focus:outline-none" aria-label="Cerrar ilustración ampliada">
+                <i class="fas fa-times-circle"></i>
+            </button>
+            <div class="overflow-hidden rounded-2xl border-4 border-white shadow-2xl bg-white">
+                <img id="lightbox-img" src="Gemini_Generated_Image_y55ffy55ffy55ffy.jpg" alt="Ilustración ampliada: Maestra guiando a los estudiantes a protegerse bajo las mesas escolares durante el sismo" class="max-h-[78vh] w-auto object-contain block mx-auto">
+            </div>
+            <div class="text-white text-center font-bold text-sm md:text-base mt-4 bg-vibrant-dark/90 px-6 py-3 rounded-full border border-white/20 shadow-lg">
+                <i class="fas fa-shield-heart text-vibrant-coral mr-2"></i> Protocolo escolar: Agáchate, Cúbrete y Agárrate bajo el cuidado docente • Panamá Oeste
+            </div>
+        </div>
+    </div>
+
+    <!-- PORTADA / HERO SECTION -->
+    <header id="inicio" class="relative min-h-[90vh] md:min-h-screen flex items-center justify-center overflow-hidden px-6 pt-10 pb-24 bg-vibrant-blue">
+        <!-- Fondos con efecto de luz -->
+        <div class="absolute inset-0 z-0 opacity-40">
+            <div class="absolute top-10 left-10 w-48 h-48 bg-vibrant-cyan rounded-full mix-blend-screen blur-2xl animate-float"></div>
+            <div class="absolute bottom-10 right-10 w-64 h-64 bg-vibrant-yellow rounded-full mix-blend-screen blur-3xl animate-float" style="animation-delay: 2s;"></div>
+        </div>
+
+        <div class="relative z-10 text-center max-w-6xl mx-auto flex flex-col items-center">
+            
+            <!-- Contexto Histórico Oficial del Sismo del 9 de Octubre -->
+            <div class="inline-flex items-center gap-2 bg-white/20 backdrop-blur-md text-white border-2 border-white/40 px-5 py-2 rounded-full font-black text-xs md:text-sm uppercase tracking-wider mb-4 shadow">
+                <i class="fas fa-bullhorn text-vibrant-yellow"></i> Ante el sismo del pasado 09 de octubre en Panamá Oeste
+            </div>
+
+            <div class="inline-block bg-vibrant-yellow text-vibrant-dark font-black px-8 py-3 rounded-full uppercase tracking-widest mb-6 shadow-xl text-xl md:text-2xl transform -rotate-2 border-4 border-white animate-pulse-ring">
+                ¡Somos Pequeños Grandes Valientes!
+            </div>
+            
+            <h1 class="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black mb-6 text-white leading-tight text-outline drop-shadow-2xl">
+                PANAMÁ OESTE:<br>
+                <span class="text-vibrant-yellow">MÁS FUERTES, MÁS UNIDOS, MÁS EMPÁTICOS</span>
+            </h1>
+            
+            <h2 class="text-xl sm:text-2xl md:text-4xl text-white font-bold mb-10 drop-shadow-lg max-w-4xl leading-snug">
+                Aprendimos a prepararnos. Hoy aprendemos qué hacer <span class="text-vibrant-yellow underline decoration-wavy decoration-2">durante</span> y <span class="text-vibrant-yellow underline decoration-wavy decoration-2">después</span> de un sismo, cuidándonos y sanando juntos.
+            </h2>
+
+            <!-- Botones de Acción de Portada -->
+            <div class="flex flex-wrap justify-center gap-4 z-20">
+                <button onclick="playWelcome(); document.getElementById('mensaje-institucional').scrollIntoView({behavior: 'smooth'})" class="btn-3d bg-vibrant-green hover:bg-green-500 shadow-3d-btn text-white font-black py-5 px-10 md:py-6 md:px-12 rounded-full text-xl md:text-2xl border-4 border-white inline-flex items-center gap-3 transition-transform focus:outline-none focus:ring-4 focus:ring-yellow-400">
+                    <i class="fas fa-play text-3xl"></i> ¡COMENZAR EXPERIENCIA!
+                </button>
+                <a href="#durante-sismo" class="btn-3d bg-vibrant-orange hover:bg-orange-600 shadow-3d-btn text-white font-black py-5 px-8 rounded-full text-xl border-4 border-white inline-flex items-center gap-3 transition-transform focus:outline-none focus:ring-4 focus:ring-yellow-400">
+                    <i class="fas fa-shield-alt text-2xl"></i> Qué hacer en el sismo
+                </a>
+            </div>
+        </div>
+        
+        <!-- Avatares decorativos 3D en la parte inferior -->
+        <div class="absolute bottom-0 w-full flex justify-center gap-4 md:gap-12 opacity-95 pointer-events-none translate-y-[15%]">
+            <i class="fas fa-child text-8xl md:text-9xl text-vibrant-yellow icon-3d animate-float"></i>
+            <i class="fas fa-chalkboard-teacher text-[10rem] md:text-[14rem] text-vibrant-cyan icon-3d -mt-10 animate-float" style="animation-delay: 1s;"></i>
+            <i class="fas fa-child-reaching text-8xl md:text-9xl text-vibrant-coral icon-3d animate-float" style="animation-delay: 2s;"></i>
+        </div>
+    </header>
+
+    <!-- MENSAJE INSTITUCIONAL DEBAJO DEL BANNER -->
+    <section id="mensaje-institucional" class="max-w-5xl mx-auto px-6 -mt-8 md:-mt-12 relative z-30 scroll-mt-24">
+        <div class="bg-vibrant-dark/95 backdrop-blur-md border-4 md:border-6 border-vibrant-yellow rounded-[2.5rem] p-6 md:p-10 shadow-2xl text-center">
+            <div class="inline-flex items-center justify-center gap-2 bg-vibrant-yellow text-vibrant-dark font-black px-5 py-1.5 rounded-full uppercase tracking-wider text-xs md:text-sm mb-4 shadow">
+                <i class="fas fa-school-flag"></i> Dirección Regional de Educación de Panamá Oeste
+            </div>
+            <p class="text-white text-lg md:text-2xl font-bold leading-relaxed max-w-4xl mx-auto">
+                “Tras el sismo del pasado 09 de octubre, nos abrazamos a la esperanza. Sigamos adelante con empatía, unidos y preparados para cuidarnos. En el regreso y permanencia en las aulas, la seguridad y la tranquilidad de nuestros estudiantes son prioridad absoluta. ¡Panamá Oeste se levanta con amor, unión y prevención!”
+            </p>
+            <div class="mt-6 flex flex-wrap justify-center items-center gap-4 text-xs md:text-sm font-black text-vibrant-yellow tracking-widest uppercase">
+                <span class="bg-white/10 px-3 py-1 rounded-full"><i class="fas fa-check-circle text-vibrant-green mr-1.5"></i> Retorno Seguro</span>
+                <span class="bg-white/10 px-3 py-1 rounded-full"><i class="fas fa-heart text-vibrant-coral mr-1.5"></i> Cuidado Emocional</span>
+                <span class="bg-white/10 px-3 py-1 rounded-full"><i class="fas fa-shield-alt text-vibrant-cyan mr-1.5"></i> Prevención Escolar y Familiar</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- CUERPO PRINCIPAL DE MÓDULOS -->
+    <main id="modulos-inicio" class="space-y-24 md:space-y-32 py-16 scroll-mt-20">
+
+        <!-- MÓDULO 1: MIENTRAS OCURRE EL SISMO (DURANTE) -->
+        <section id="durante-sismo" class="max-w-7xl mx-auto px-6 scroll-mt-24">
+            <div class="text-center mb-16">
+                <div class="inline-block bg-vibrant-orange text-white font-black px-6 py-2 rounded-full uppercase tracking-widest mb-4 shadow-md text-sm md:text-base border-2 border-white">
+                    <i class="fas fa-exclamation-triangle mr-2"></i> Paso 1: MIENTRAS LA TIERRA TIEMBLA (DURANTE EL SISMO)
+                </div>
+                <h2 class="text-4xl md:text-6xl font-black text-vibrant-blue mb-6">¡Recuerda los 3 pasos de oro de los simulacros!</h2>
+                <div class="bg-vibrant-yellow text-vibrant-dark rounded-3xl p-6 inline-block shadow-lg border-4 border-white transform rotate-1 max-w-3xl mx-auto">
+                    <p class="text-xl md:text-2xl font-bold"><i class="fas fa-star mr-2 text-vibrant-orange"></i> ¡Tú ya sabes qué hacer! Mantener la calma y reaccionar con rapidez nos protege a nosotros y a los que nos rodean.</p>
+                </div>
+            </div>
+
+            <!-- Grid de los 3 Pasos Vitales -->
+            <div class="grid md:grid-cols-3 gap-8 mb-14">
+                <!-- Paso 1: Agáchate -->
+                <div class="card-3d p-8 text-center border-b-8 border-vibrant-orange shadow-3d-card bg-orange-50/80 flex flex-col h-full hover:bg-orange-50 transition-colors">
+                    <div class="w-24 h-24 bg-vibrant-orange rounded-full mx-auto flex items-center justify-center shadow-inner-light border-4 border-white mb-6 flex-shrink-0">
+                        <span class="text-5xl font-black text-white">1</span>
+                    </div>
+                    <i class="fas fa-arrow-down text-6xl text-vibrant-orange mb-6 icon-3d"></i>
+                    <h3 class="text-3xl font-black text-vibrant-dark mb-4">¡AGÁCHATE!</h3>
+                    <p class="text-lg font-bold text-gray-700 flex-grow leading-relaxed">
+                        Baja inmediatamente al suelo apoyando manos y rodillas. Esto evita que pierdas el equilibrio o te caigas por el movimiento del sismo.
+                    </p>
+                    <div class="mt-4 bg-orange-200/60 p-3 rounded-xl text-sm font-black text-orange-900">
+                        <i class="fas fa-bullseye mr-1"></i> Primer reflejo vital
+                    </div>
+                </div>
+
+                <!-- Paso 2: Cúbrete -->
+                <div class="card-3d p-8 text-center border-b-8 border-vibrant-green shadow-3d-card bg-green-50/80 flex flex-col h-full hover:bg-green-50 transition-colors">
+                    <div class="w-24 h-24 bg-vibrant-green rounded-full mx-auto flex items-center justify-center shadow-inner-light border-4 border-white mb-6 flex-shrink-0">
+                        <span class="text-5xl font-black text-white">2</span>
+                    </div>
+                    <i class="fas fa-table text-6xl text-vibrant-green mb-6 icon-3d"></i>
+                    <h3 class="text-3xl font-black text-vibrant-dark mb-4">¡CÚBRETE!</h3>
+                    <p class="text-lg font-bold text-gray-700 flex-grow leading-relaxed">
+                        Coloca tu cuerpo bajo un pupitre o mesa resistente protegiendo tu cabeza y cuello con tus brazos. Si no hay mesa, cúbrete contra una pared interior lejos de ventanas.
+                    </p>
+                    <div class="mt-4 bg-green-200/60 p-3 rounded-xl text-sm font-black text-green-900">
+                        <i class="fas fa-shield-alt mr-1"></i> Protege tu cabeza
+                    </div>
+                </div>
+
+                <!-- Paso 3: Agárrate -->
+                <div class="card-3d p-8 text-center border-b-8 border-vibrant-blue shadow-3d-card bg-blue-50/80 flex flex-col h-full hover:bg-blue-50 transition-colors">
+                    <div class="w-24 h-24 bg-vibrant-blue rounded-full mx-auto flex items-center justify-center shadow-inner-light border-4 border-white mb-6 flex-shrink-0">
+                        <span class="text-5xl font-black text-white">3</span>
+                    </div>
+                    <i class="fas fa-hands text-6xl text-vibrant-blue mb-6 icon-3d"></i>
+                    <h3 class="text-3xl font-black text-vibrant-dark mb-4">¡AGÁRRATE!</h3>
+                    <p class="text-lg font-bold text-gray-700 flex-grow leading-relaxed">
+                        Sujétate firmemente con una mano de la pata de la mesa y muévete junto a ella si se desplaza. Mantén la otra mano cubriendo tu cuello hasta que termine el temblor.
+                    </p>
+                    <div class="mt-4 bg-blue-200/60 p-3 rounded-xl text-sm font-black text-blue-900">
+                        <i class="fas fa-anchor mr-1"></i> Hasta que cese el sismo
+                    </div>
+                </div>
+            </div>
+
+            <!-- Consejos Claves MIENTRAS tiembla -->
+            <div class="bg-gradient-to-r from-amber-50 to-orange-50 border-4 border-vibrant-orange rounded-3xl p-6 md:p-8 mb-14 shadow-lg">
+                <h4 class="text-2xl font-black text-vibrant-orange mb-4 text-center flex items-center justify-center gap-2">
+                    <i class="fas fa-lightbulb"></i> Reglas Clave MIENTRAS está temblando:
+                </h4>
+                <div class="grid sm:grid-cols-2 md:grid-cols-4 gap-4 text-center">
+                    <div class="bg-white p-4 rounded-2xl shadow-sm border border-orange-200">
+                        <i class="fas fa-ban text-3xl text-vibrant-coral mb-2"></i>
+                        <p class="font-bold text-gray-800 text-sm"><strong>NO corras ni empujes:</strong> Salir corriendo durante el movimiento provoca caídas graves.</p>
+                    </div>
+                    <div class="bg-white p-4 rounded-2xl shadow-sm border border-orange-200">
+                        <i class="fas fa-window-close text-3xl text-vibrant-cyan mb-2"></i>
+                        <p class="font-bold text-gray-800 text-sm"><strong>Aléjate de ventanas:</strong> Los vidrios y estantes altos pueden quebrarse o caer.</p>
+                    </div>
+                    <div class="bg-white p-4 rounded-2xl shadow-sm border border-orange-200">
+                        <i class="fas fa-chalkboard-teacher text-3xl text-vibrant-green mb-2"></i>
+                        <p class="font-bold text-gray-800 text-sm"><strong>Escucha a tu docente:</strong> Los maestros están capacitados para guiarte en todo momento.</p>
+                    </div>
+                    <div class="bg-white p-4 rounded-2xl shadow-sm border border-orange-200">
+                        <i class="fas fa-tree text-3xl text-vibrant-blue mb-2"></i>
+                        <p class="font-bold text-gray-800 text-sm"><strong>Si estás afuera:</strong> Aléjate de postes eléctricos, árboles altos y muros.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Minijuego Interactivo: Validación de Respuesta -->
+            <div class="bg-white rounded-[3rem] p-8 md:p-12 border-8 border-vibrant-cyan shadow-3d-card text-center max-w-4xl mx-auto">
+                <h3 class="text-3xl font-black text-vibrant-cyan mb-4"><i class="fas fa-gamepad mr-3 text-vibrant-orange"></i> ¡Recordemos nuestro simulacro!</h3>
+                <p class="text-xl md:text-2xl font-bold text-gray-700 mb-8">Si estás en el salón de clases y la tierra empieza a moverse, ¿cuál es la acción correcta?</p>
+                <div class="space-y-4">
+                    <button onclick="checkGame(false, '¡Cuidado! Salir corriendo durante el temblor puede causar tropiezos y que caigan objetos sobre ti. Lo primero siempre es agacharse, cubrirse y agarrarse.', 'fas fa-times-circle', 'text-vibrant-coral')" class="w-full text-left bg-gray-50 hover:bg-red-50 p-6 rounded-2xl text-lg md:text-xl font-bold border-4 border-transparent hover:border-vibrant-coral transition-colors h-auto focus:outline-none focus:ring-4 focus:ring-yellow-400 flex items-center gap-4">
+                        <span class="w-10 h-10 rounded-full bg-red-100 text-vibrant-coral flex items-center justify-center font-black flex-shrink-0">A</span>
+                        <span>Salir corriendo rápido hacia el patio sin esperar indicaciones de la maestra.</span>
+                    </button>
+                    <button onclick="checkGame(true, '¡Excelente! Agacharse, cubrirse bajo el pupitre, agarrarse fuerte y escuchar a tu docente es la regla de oro que salva vidas.', 'fas fa-star', 'text-vibrant-yellow')" class="w-full text-left bg-gray-50 hover:bg-green-50 p-6 rounded-2xl text-lg md:text-xl font-bold border-4 border-transparent hover:border-vibrant-green transition-colors h-auto focus:outline-none focus:ring-4 focus:ring-yellow-400 flex items-center gap-4">
+                        <span class="w-10 h-10 rounded-full bg-green-100 text-vibrant-green flex items-center justify-center font-black flex-shrink-0">B</span>
+                        <span>Agacharme, cubrirme bajo mi pupitre, agarrarme con fuerza y esperar las indicaciones de mi maestro.</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- MÓDULO 2: DESPUÉS DEL SISMO -->
+        <section id="despues-sismo" class="bg-vibrant-blue py-20 px-6 relative overflow-hidden scroll-mt-24">
+            <i class="fas fa-shield-halved absolute -right-10 -bottom-20 text-[20rem] md:text-[30rem] text-blue-800 opacity-20 pointer-events-none"></i>
+            
+            <div class="max-w-7xl mx-auto relative z-10">
+                <div class="text-center mb-16">
+                    <div class="inline-block bg-vibrant-yellow text-vibrant-dark font-black px-6 py-2 rounded-full uppercase tracking-widest mb-4 shadow text-sm md:text-base border-2 border-white">
+                        <i class="fas fa-walking mr-2"></i> Paso 2: ¿QUÉ HACER DESPUÉS DEL SISMO?
+                    </div>
+                    <h2 class="text-4xl md:text-6xl font-black text-white mb-6 text-outline drop-shadow-xl">El sismo se detuvo: Pasamos a la acción segura</h2>
+                    <p class="text-xl md:text-2xl text-blue-100 font-bold max-w-3xl mx-auto mb-8">
+                        Cuando el movimiento de la tierra pasa, debemos seguir estos pasos con orden, disciplina y solidaridad.
+                    </p>
+                    <button onclick="speak('Después del sismo: Mantén la calma. Escucha a los adultos. Prepárate para réplicas. Evacúa solo cuando sea seguro hacia el punto de encuentro. No toques cables caídos. Usa mensajes cortos y ayuda a quien lo necesite.')" class="btn-3d bg-vibrant-yellow shadow-3d-btn text-vibrant-dark font-black py-4 px-8 rounded-full text-xl md:text-2xl border-4 border-white inline-flex items-center gap-3 focus:outline-none focus:ring-4 focus:ring-white">
+                        <i class="fas fa-volume-up"></i> Escuchar Instrucciones
+                    </button>
+                </div>
+
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Tarjeta 1 -->
+                    <div class="card-3d p-6 flex flex-col sm:flex-row items-center sm:items-start gap-4 bg-white/95 backdrop-blur h-full">
+                        <i class="fas fa-ear-listen text-5xl text-vibrant-cyan icon-3d w-16 text-center flex-shrink-0"></i>
+                        <div>
+                            <h4 class="font-black text-vibrant-dark text-xl mb-1">1. Escucha las instrucciones</h4>
+                            <p class="text-base font-bold text-gray-700">Mantén la calma y atiende la voz de los docentes o adultos a cargo antes de levantarte o salir.</p>
+                        </div>
+                    </div>
+
+                    <!-- Tarjeta 2 -->
+                    <div class="card-3d p-6 flex flex-col sm:flex-row items-center sm:items-start gap-4 bg-white/95 backdrop-blur h-full">
+                        <i class="fas fa-person-walking-arrow-right text-5xl text-vibrant-green icon-3d w-16 text-center flex-shrink-0"></i>
+                        <div>
+                            <h4 class="font-black text-vibrant-dark text-xl mb-1">2. Evacúa al Punto de Encuentro</h4>
+                            <p class="text-base font-bold text-gray-700">Solo cuando el adulto indique que es seguro, camina con paso firme hacia la zona segura acordada.</p>
+                        </div>
+                    </div>
+
+                    <!-- Tarjeta 3 -->
+                    <div class="card-3d p-6 flex flex-col sm:flex-row items-center sm:items-start gap-4 bg-white/95 backdrop-blur h-full">
+                        <i class="fas fa-house-crack text-5xl text-vibrant-orange icon-3d w-16 text-center flex-shrink-0"></i>
+                        <div>
+                            <h4 class="font-black text-vibrant-dark text-xl mb-1">3. No entres a edificios dañados</h4>
+                            <p class="text-base font-bold text-gray-700">Nunca regreses al salón o casa por pertenencias hasta que los expertos de SINAPROC o Bomberos lo autoricen.</p>
+                        </div>
+                    </div>
+
+                    <!-- Tarjeta 4 -->
+                    <div class="card-3d p-6 flex flex-col sm:flex-row items-center sm:items-start gap-4 bg-white/95 backdrop-blur h-full">
+                        <i class="fas fa-bolt-lightning text-5xl text-vibrant-coral icon-3d w-16 text-center flex-shrink-0"></i>
+                        <div>
+                            <h4 class="font-black text-vibrant-dark text-xl mb-1">4. Cuidado con cables y vidrios</h4>
+                            <p class="text-base font-bold text-gray-700">Aléjate de cables caídos, postes inclinados y escombros. Nunca toques cables eléctricos.</p>
+                        </div>
+                    </div>
+
+                    <!-- Tarjeta 5 -->
+                    <div class="card-3d p-6 flex flex-col sm:flex-row items-center sm:items-start gap-4 bg-white/95 backdrop-blur h-full">
+                        <i class="fas fa-wave-square text-5xl text-purple-600 icon-3d w-16 text-center flex-shrink-0"></i>
+                        <div>
+                            <h4 class="font-black text-vibrant-dark text-xl mb-1">5. Prepárate para réplicas</h4>
+                            <p class="text-base font-bold text-gray-700">Tras un sismo, pueden ocurrir movimientos menores. Mantente en zonas despejadas y listo para cubrirte.</p>
+                        </div>
+                    </div>
+
+                    <!-- Tarjeta 6 -->
+                    <div class="card-3d p-6 flex flex-col sm:flex-row items-center sm:items-start gap-4 bg-white/95 backdrop-blur h-full">
+                        <i class="fas fa-comment-sms text-5xl text-vibrant-yellow icon-3d w-16 text-center flex-shrink-0"></i>
+                        <div>
+                            <h4 class="font-black text-vibrant-dark text-xl mb-1">6. Comunicación responsable</h4>
+                            <p class="text-base font-bold text-gray-700">Usa mensajes de texto cortos para avisar a tu familia y no saturar las líneas telefónicas de emergencia.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Banner solidario inferior del módulo -->
+                <div class="mt-8 bg-vibrant-green text-white p-6 rounded-3xl text-center shadow-lg border-2 border-white max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-center gap-4">
+                    <i class="fas fa-heart text-4xl text-white icon-3d flex-shrink-0"></i>
+                    <p class="text-xl font-black">
+                        Ser valiente también significa escuchar, protegerte con orden y pedir ayuda cuando lo necesites.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- MÓDULO 3: PUNTO DE ENCUENTRO ESCOLAR Y FAMILIAR -->
+        <section id="punto-encuentro" class="max-w-7xl mx-auto px-6 scroll-mt-24">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl md:text-6xl font-black text-vibrant-blue mb-6">Mi escuela y mi hogar tienen un punto de encuentro</h2>
+                <div class="bg-vibrant-cyan text-white rounded-3xl p-6 inline-block shadow-lg border-4 border-white transform -rotate-1 max-w-4xl mx-auto">
+                    <p class="text-xl md:text-2xl font-bold">
+                        <i class="fas fa-map-marked-alt text-vibrant-yellow mr-3 text-3xl"></i> 
+                        ¡Conocerlo nos salva! Cada centro educativo en Panamá Oeste tiene un punto seguro acordado donde docentes y estudiantes se reúnen.
+                    </p>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-[3rem] p-8 md:p-12 shadow-3d-card border-8 border-vibrant-blue grid lg:grid-cols-2 gap-10 items-stretch">
+                <!-- Checklist de Seguridad -->
+                <div class="flex flex-col">
+                    <div class="text-center mb-6">
+                        <i class="fas fa-school-flag text-7xl text-vibrant-orange icon-3d animate-float"></i>
+                    </div>
+                    
+                    <div class="bg-blue-50 p-6 rounded-2xl border-4 border-vibrant-blue shadow-inner flex-grow">
+                        <h3 class="text-2xl font-black text-vibrant-blue mb-4">Lista de Comprobación en la Escuela:</h3>
+                        <ul class="space-y-4 text-lg font-bold text-gray-700">
+                            <li class="flex items-start gap-4 cursor-pointer hover:text-vibrant-blue transition-colors" onclick="this.querySelector('input').click()">
+                                <input type="checkbox" class="w-6 h-6 mt-1 text-vibrant-blue rounded accent-vibrant-blue flex-shrink-0"> 
+                                <span>Sé con claridad dónde está ubicado el punto de encuentro de mi escuela.</span>
+                            </li>
+                            <li class="flex items-start gap-4 cursor-pointer hover:text-vibrant-blue transition-colors" onclick="this.querySelector('input').click()">
+                                <input type="checkbox" class="w-6 h-6 mt-1 text-vibrant-blue rounded accent-vibrant-blue flex-shrink-0"> 
+                                <span>Conozco la ruta de evacuación que corresponde a mi aula.</span>
+                            </li>
+                            <li class="flex items-start gap-4 cursor-pointer hover:text-vibrant-blue transition-colors" onclick="this.querySelector('input').click()">
+                                <input type="checkbox" class="w-6 h-6 mt-1 text-vibrant-blue rounded accent-vibrant-blue flex-shrink-0"> 
+                                <span>Sé que debo caminar en fila, sin correr, sin empujar y en silencio para oír al docente.</span>
+                            </li>
+                            <li class="flex items-start gap-4 cursor-pointer hover:text-vibrant-blue transition-colors" onclick="this.querySelector('input').click()">
+                                <input type="checkbox" class="w-6 h-6 mt-1 text-vibrant-blue rounded accent-vibrant-blue flex-shrink-0"> 
+                                <span>Entiendo que nunca debo regresar al salón por la mochila o celular.</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Formulario de Práctica / Repaso -->
+                <div class="bg-gray-100 p-8 rounded-3xl border-4 border-dashed border-gray-300 relative card-3d flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-3xl font-black text-vibrant-dark mb-2">¿Dónde nos reunimos?</h3>
+                        <p class="text-gray-600 font-bold mb-6">Repasa estos datos con tu maestro y tu familia según el plan oficial de tu colegio.</p>
+                        
+                        <div class="space-y-4">
+                            <div>
+                                <label for="school-name-input" class="block text-sm font-black text-gray-700 mb-1">Nombre de tu escuela o colegio:</label>
+                                <input type="text" id="school-name-input" placeholder="Ej: Escuela Bilingüe de La Chorrera / Arraiján" class="w-full p-4 rounded-xl font-bold text-lg border-2 border-gray-300 focus:border-vibrant-cyan outline-none transition-colors" aria-label="Nombre de tu escuela">
+                            </div>
+                            <div>
+                                <label for="meeting-point-input" class="block text-sm font-black text-gray-700 mb-1">Punto seguro de reunión:</label>
+                                <input type="text" id="meeting-point-input" placeholder="Ej: Cancha techada / Patio central / Zona verde" class="w-full p-4 rounded-xl font-bold text-lg border-2 border-gray-300 focus:border-vibrant-cyan outline-none transition-colors" aria-label="Punto de encuentro">
+                            </div>
+                            
+                            <div class="bg-vibrant-coral/10 p-4 rounded-xl mt-4 border border-vibrant-coral/30">
+                                <p class="text-sm font-bold text-vibrant-coral flex items-start gap-2">
+                                    <i class="fas fa-exclamation-triangle mt-1 flex-shrink-0"></i>
+                                    <span>Importante: Consulta siempre el plan oficial coordinado con el MEDUCA y SINAPROC en tu plantel.</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button onclick="playSFX(600, 'sine', 0.2); showModal('¡Datos Repasados!', 'Conocer nuestro punto de encuentro nos ayuda a estar seguros, reunidos y tranquilos.', 'fas fa-map-marked-alt', 'text-vibrant-green')" class="btn-3d w-full bg-vibrant-green hover:bg-green-500 text-white font-black py-4 rounded-xl text-xl border-2 border-white mt-6 transition-colors focus:outline-none focus:ring-4 focus:ring-yellow-400">
+                        ¡Confirmar nuestro Punto Seguro!
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Actividad en Casa -->
+            <div class="mt-10 bg-vibrant-orange text-white rounded-[2rem] p-8 text-center shadow-3d-card border-4 border-white max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-6">
+                <i class="fas fa-house-chimney-medical text-6xl icon-3d flex-shrink-0"></i>
+                <div class="text-left">
+                    <h3 class="text-2xl md:text-3xl font-black mb-2">Compromiso en Familia</h3>
+                    <p class="text-lg md:text-xl font-bold leading-relaxed">Junto a tus padres o tutores, acuerden hoy mismo un punto de encuentro fuera de casa (un parque, patio o esquina segura) por si ocurre un sismo cuando están separados.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- MÓDULO 4: MOCHILA DE PREVENCIÓN FAMILIAR -->
+        <section id="mochila" class="max-w-7xl mx-auto px-6 scroll-mt-24">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-6xl font-black text-vibrant-orange mb-4">Mi familia también sabe cuidarse</h2>
+                <p class="text-2xl md:text-3xl font-bold text-gray-700">¡Armemos juntos la Mochila de Emergencia!</p>
+            </div>
+
+            <div class="flex flex-col lg:flex-row gap-12 items-center bg-white p-8 md:p-12 rounded-[3rem] shadow-3d-card border-8 border-vibrant-yellow">
+                <!-- Mochila 3D con Contador -->
+                <div class="w-full lg:w-1/3 flex justify-center relative">
+                    <div class="w-64 h-80 bg-vibrant-coral rounded-t-[5rem] rounded-b-3xl shadow-2xl border-8 border-white flex flex-col items-center justify-center relative z-10">
+                        <i class="fas fa-backpack text-8xl text-white opacity-90 mb-4 icon-3d"></i>
+                        <div class="bg-white text-vibrant-coral font-black text-3xl px-6 py-2 rounded-full shadow-inner border-4 border-vibrant-coral">
+                            <span id="backpack-count">0</span> / 8
+                        </div>
+                    </div>
+                    <div class="absolute inset-0 bg-vibrant-yellow blur-3xl opacity-30 z-0"></div>
+                </div>
+
+                <!-- Elementos Interactivos -->
+                <div class="w-full lg:w-2/3">
+                    <p class="text-xl font-bold text-gray-700 mb-6 bg-yellow-50 p-4 rounded-2xl border-2 border-vibrant-yellow text-center">
+                        Toca cada artículo para empacarlo. ¡Asegúrate de tener estos elementos listos en casa!
+                    </p>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <button onclick="toggleBackpack(this)" class="bp-item card-3d p-4 text-center bg-gray-50 flex flex-col items-center gap-3 h-full focus:outline-none focus:ring-4 focus:ring-vibrant-cyan transition-all">
+                            <i class="fas fa-bottle-water text-4xl text-vibrant-cyan icon-3d"></i>
+                            <span class="font-bold text-base md:text-lg">Agua potable</span>
+                        </button>
+                        <button onclick="toggleBackpack(this)" class="bp-item card-3d p-4 text-center bg-gray-50 flex flex-col items-center gap-3 h-full focus:outline-none focus:ring-4 focus:ring-vibrant-orange transition-all">
+                            <i class="fas fa-cookie text-4xl text-vibrant-orange icon-3d"></i>
+                            <span class="font-bold text-base md:text-lg">Alimentos no perecederos</span>
+                        </button>
+                        <button onclick="toggleBackpack(this)" class="bp-item card-3d p-4 text-center bg-gray-50 flex flex-col items-center gap-3 h-full focus:outline-none focus:ring-4 focus:ring-vibrant-yellow transition-all">
+                            <i class="fas fa-flashlight text-4xl text-vibrant-yellow icon-3d"></i>
+                            <span class="font-bold text-base md:text-lg">Linterna con pilas</span>
+                        </button>
+                        <button onclick="toggleBackpack(this)" class="bp-item card-3d p-4 text-center bg-gray-50 flex flex-col items-center gap-3 h-full focus:outline-none focus:ring-4 focus:ring-vibrant-coral transition-all">
+                            <i class="fas fa-medkit text-4xl text-vibrant-coral icon-3d"></i>
+                            <span class="font-bold text-base md:text-lg">Botiquín básico</span>
+                        </button>
+                        <button onclick="toggleBackpack(this)" class="bp-item card-3d p-4 text-center bg-gray-50 flex flex-col items-center gap-3 h-full focus:outline-none focus:ring-4 focus:ring-gray-400 transition-all">
+                            <i class="fas fa-radio text-4xl text-gray-600 icon-3d"></i>
+                            <span class="font-bold text-base md:text-lg">Radio portátil</span>
+                        </button>
+                        <button onclick="toggleBackpack(this)" class="bp-item card-3d p-4 text-center bg-gray-50 flex flex-col items-center gap-3 h-full focus:outline-none focus:ring-4 focus:ring-vibrant-blue transition-all">
+                            <i class="fas fa-bullhorn text-4xl text-vibrant-blue icon-3d"></i>
+                            <span class="font-bold text-base md:text-lg">Silbato de auxilio</span>
+                        </button>
+                        <button onclick="toggleBackpack(this)" class="bp-item card-3d p-4 text-center bg-gray-50 flex flex-col items-center gap-3 h-full focus:outline-none focus:ring-4 focus:ring-vibrant-green transition-all">
+                            <i class="fas fa-folder text-4xl text-vibrant-green icon-3d"></i>
+                            <span class="font-bold text-base md:text-lg">Documentos y copia</span>
+                        </button>
+                        <button onclick="toggleBackpack(this)" class="bp-item card-3d p-4 text-center bg-gray-50 flex flex-col items-center gap-3 h-full focus:outline-none focus:ring-4 focus:ring-purple-500 transition-all">
+                            <i class="fas fa-pills text-4xl text-purple-500 icon-3d"></i>
+                            <span class="font-bold text-base md:text-lg">Medicinas familiares</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MÓDULO 5: CUIDADO EMOCIONAL -->
+        <section id="emociones" class="max-w-7xl mx-auto px-6 scroll-mt-24">
+            <div class="bg-vibrant-dark rounded-[4rem] p-8 md:p-16 text-white border-8 border-vibrant-coral relative overflow-hidden shadow-2xl">
+                <div class="absolute top-0 left-0 w-full h-full opacity-20 pointer-events-none">
+                    <div class="absolute top-10 left-1/4 w-64 h-64 bg-vibrant-coral rounded-full blur-[100px]"></div>
+                    <div class="absolute bottom-10 right-1/4 w-64 h-64 bg-vibrant-blue rounded-full blur-[100px]"></div>
+                </div>
+
+                <div class="text-center relative z-10 mb-12">
+                    <i class="fas fa-heart-pulse text-6xl md:text-7xl text-vibrant-coral mb-6 animate-float icon-3d"></i>
+                    <h2 class="text-4xl md:text-6xl font-black mb-4">Mi corazón también necesita cuidados</h2>
+                    <p class="text-xl md:text-2xl font-bold text-gray-300">¿Cómo te has sentido tras el sismo del 09 de octubre? Toca una tarjeta para recibir un mensaje.</p>
+                </div>
+
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 relative z-10 mb-12">
+                    <button onclick="handleEmotion('tranquilo')" class="card-3d p-4 md:p-6 bg-vibrant-green text-center border-none flex flex-col justify-center items-center h-full focus:outline-none focus:ring-4 focus:ring-white">
+                        <i class="fas fa-face-smile-beam text-5xl md:text-6xl text-white mb-4 icon-3d"></i>
+                        <p class="text-lg md:text-xl font-black text-white">Estoy tranquilo</p>
+                    </button>
+                    <button onclick="handleEmotion('miedo')" class="card-3d p-4 md:p-6 bg-vibrant-blue text-center border-none flex flex-col justify-center items-center h-full focus:outline-none focus:ring-4 focus:ring-white">
+                        <i class="fas fa-face-frown-open text-5xl md:text-6xl text-white mb-4 icon-3d"></i>
+                        <p class="text-lg md:text-xl font-black text-white">Siento miedo</p>
+                    </button>
+                    <button onclick="handleEmotion('triste')" class="card-3d p-4 md:p-6 bg-vibrant-cyan text-center border-none flex flex-col justify-center items-center h-full focus:outline-none focus:ring-4 focus:ring-white">
+                        <i class="fas fa-face-sad-tear text-5xl md:text-6xl text-white mb-4 icon-3d"></i>
+                        <p class="text-lg md:text-xl font-black text-white">Me siento triste</p>
+                    </button>
+                    <button onclick="handleEmotion('preocupado')" class="card-3d p-4 md:p-6 bg-vibrant-yellow text-center border-none flex flex-col justify-center items-center h-full focus:outline-none focus:ring-4 focus:ring-white">
+                        <i class="fas fa-face-flushed text-5xl md:text-6xl text-vibrant-dark mb-4 icon-3d"></i>
+                        <p class="text-lg md:text-xl font-black text-vibrant-dark leading-tight">Me preocupa que vuelva a temblar</p>
+                    </button>
+                    <button onclick="handleEmotion('dormir')" class="card-3d p-4 md:p-6 bg-purple-500 text-center border-none flex flex-col justify-center items-center h-full focus:outline-none focus:ring-4 focus:ring-white">
+                        <i class="fas fa-bed text-5xl md:text-6xl text-white mb-4 icon-3d"></i>
+                        <p class="text-lg md:text-xl font-black text-white">Me cuesta dormir</p>
+                    </button>
+                    <button onclick="handleEmotion('hablar')" class="card-3d p-4 md:p-6 bg-vibrant-coral text-center border-none flex flex-col justify-center items-center h-full focus:outline-none focus:ring-4 focus:ring-white">
+                        <i class="fas fa-comments text-5xl md:text-6xl text-white mb-4 icon-3d"></i>
+                        <p class="text-lg md:text-xl font-black text-white leading-tight">Necesito hablar con alguien</p>
+                    </button>
+                </div>
+
+                <div class="text-center relative z-10 bg-white/10 p-6 md:p-8 rounded-3xl backdrop-blur border border-white/20">
+                    <p class="text-2xl md:text-3xl font-bold text-vibrant-yellow mb-2">
+                        "No tienes que dejar de sentir miedo de inmediato. Puedes sanar poco a poco, acompañado de las personas que te quieren."
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- MÓDULO 6: CUENTO INTERACTIVO Y EMOTIVO CON LA ILUSTRACIÓN REAL -->
+        <section id="cuento" class="max-w-7xl mx-auto px-6 scroll-mt-24">
+            <div class="bg-white rounded-[3rem] p-8 md:p-16 shadow-3d-card border-t-8 border-vibrant-blue">
+                <div class="text-center mb-10">
+                    <i class="fas fa-book-open text-6xl md:text-7xl text-vibrant-blue mb-4 icon-3d"></i>
+                    <h2 class="text-3xl md:text-5xl font-black text-vibrant-dark mb-4">El día que la tierra se movió y nuestros corazones se unieron</h2>
+                    <p class="text-xl md:text-2xl font-bold text-gray-600 max-w-3xl mx-auto mb-6">
+                        Una historia inspirada en el valor de los niños, docentes y familias de Panamá Oeste.
+                    </p>
+                    
+                    <div class="flex flex-wrap justify-center gap-4 mt-4">
+                        <button onclick="playCuento()" class="btn-3d bg-vibrant-green hover:bg-green-500 text-white font-black py-3 px-8 rounded-full text-xl shadow-3d-btn border-2 border-white flex items-center focus:outline-none focus:ring-4 focus:ring-vibrant-yellow">
+                            <i class="fas fa-play mr-3"></i> Leer Conmigo
+                        </button>
+                        <button onclick="stopAudio()" class="btn-3d bg-gray-500 hover:bg-gray-600 text-white font-black py-3 px-8 rounded-full text-xl shadow-3d-btn border-2 border-white flex items-center focus:outline-none focus:ring-4 focus:ring-vibrant-yellow">
+                            <i class="fas fa-pause mr-3"></i> Pausar
+                        </button>
+                    </div>
+                </div>
+
+                <div class="flex flex-col lg:flex-row items-center lg:items-start gap-10">
+                    
+                    <!-- Ilustración Real Integrada (Reemplazada de la carpeta) -->
+                    <div class="w-full lg:w-5/12 flex-shrink-0 relative rounded-3xl overflow-hidden shadow-2xl border-4 border-vibrant-yellow bg-sky-50 group transition-all duration-300 hover:shadow-cyan-500/20">
+                        <div id="illustration-container" class="relative w-full overflow-hidden bg-amber-50">
+                            <!-- Imagen JPG Oficial de la Carpeta -->
+                            <img 
+                                id="story-img"
+                                src="Gemini_Generated_Image_y55ffy55ffy55ffy.jpg" 
+                                alt="Ilustración del cuento: Maestra orientando y cuidando con calma a Sofía, Mateo y sus compañeros mientras se protegen bajo los pupitres escolares durante el sismo en el aula de Panamá Oeste" 
+                                class="w-full h-auto object-cover block transition-transform duration-500 group-hover:scale-[1.03] cursor-pointer"
+                                onclick="openImageLightbox()"
+                                loading="lazy"
+                                onerror="handleStoryImgError()"
+                            />
+
+                            <!-- Indicador de Ampliar Imagen -->
+                            <div class="absolute top-3 right-3 bg-vibrant-dark/80 text-white text-xs font-bold px-3 py-1.5 rounded-full backdrop-blur-md flex items-center gap-1.5 shadow pointer-events-none">
+                                <i class="fas fa-search-plus text-vibrant-yellow"></i> Toca para ampliar
+                            </div>
+
+                            <!-- Ilustración Vectorial SVG de Respaldo Técnico (solo si la imagen no carga) -->
+                            <div id="story-svg-fallback" class="hidden w-full h-auto">
+                                <svg viewBox="0 0 960 640" class="w-full h-auto block select-none" xmlns="http://www.w3.org/2000/svg">
+                                    <defs>
+                                        <linearGradient id="wallGradNew" x1="0%" y1="0%" x2="0%" y2="100%">
+                                            <stop offset="0%" stop-color="#FFFBEB" />
+                                            <stop offset="100%" stop-color="#FEF3C7" />
+                                        </linearGradient>
+                                        <linearGradient id="floorGradNew" x1="0%" y1="0%" x2="0%" y2="100%">
+                                            <stop offset="0%" stop-color="#FDE68A" />
+                                            <stop offset="100%" stop-color="#E2E8F0" />
+                                        </linearGradient>
+                                    </defs>
+                                    <rect x="0" y="0" width="960" height="420" fill="url(#wallGradNew)"/>
+                                    <rect x="0" y="420" width="960" height="220" fill="url(#floorGradNew)"/>
+                                    <text x="480" y="320" text-anchor="middle" font-size="28" font-family="'Nunito', sans-serif" font-weight="900" fill="#1E3A8A">
+                                        Simulacro Sísmico: Agáchate, Cúbrete y Agárrate
+                                    </text>
+                                </svg>
+                            </div>
+                        </div>
+
+                        <!-- Pie descriptivo y botón de ampliación -->
+                        <div class="bg-vibrant-dark/95 backdrop-blur-sm px-4 py-3 text-center border-t-2 border-vibrant-yellow/40 flex flex-col gap-2">
+                            <p class="text-xs md:text-sm font-black text-vibrant-yellow tracking-wide uppercase">
+                                <i class="fas fa-shield-heart text-vibrant-coral mr-1.5"></i> Protocolo en acción: Agacharse, cubrirse y agarrarse en el aula
+                            </p>
+                            <div class="flex items-center justify-center gap-2 pt-1 text-xs">
+                                <button onclick="openImageLightbox()" class="bg-white/20 hover:bg-white/30 text-white font-bold px-3 py-1 rounded-full text-xs transition-colors border border-white/30 inline-flex items-center gap-1.5">
+                                    <i class="fas fa-expand"></i> Ver ilustración completa
+                                </button>
+                                <label for="img-file-input" class="cursor-pointer bg-white/20 hover:bg-white/30 text-white font-bold px-3 py-1 rounded-full text-xs transition-colors border border-white/30 inline-flex items-center gap-1">
+                                    <i class="fas fa-folder-open"></i> Cambiar imagen
+                                </label>
+                                <input type="file" id="img-file-input" accept="image/*" class="hidden" onchange="loadUserImage(event)">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Texto del Cuento con Resaltado Dinámico de Lectura -->
+                    <div class="w-full lg:w-7/12 text-xl md:text-2xl font-bold text-gray-700 leading-relaxed space-y-6 md:space-y-8" id="cuento-container">
+                        <p id="c-p1" class="transition-all duration-300">Aquella mañana, en una escuela de Panamá Oeste, Sofía, Mateo y sus compañeros aprendían, reían y compartían sus sueños.</p>
+                        <p id="c-p2" class="transition-all duration-300">Su maestra les recordó algo que habían practicado muchas veces en los simulacros: <br>—Niños, cuando practicamos, aprendemos a protegernos. No lo hacemos para tener miedo, sino para estar preparados.</p>
+                        <p id="c-p3" class="transition-all duration-300">De pronto, como ocurrió el pasado 9 de octubre, la tierra comenzó a moverse. Sofía sintió que su corazón latía muy rápido. Mateo miró a sus compañeros, sorprendido y asustado.</p>
+                        <p id="c-p4" class="transition-all duration-300">Entonces recordaron lo aprendido: <strong>¡Agáchate, cúbrete y agárrate!</strong> Protegieron su cabeza y se colocaron bajo las mesas resistentes. Su maestra, con voz firme y serena, los guio en cada segundo.</p>
+                        <p id="c-p5" class="transition-all duration-300">—Estoy aquí con ustedes. Mantengan la calma y sigan los pasos practicados —les decía. Aunque los adultos también sienten el temblor, su amor y vocación los mantuvieron cuidando a los niños.</p>
+                        <p id="c-p6" class="transition-all duration-300">Cuando el movimiento terminó, esperaron la indicación con serenidad. Luego evacuaron ordenadamente hacia el punto de encuentro oficial. Sofía abrazó a su maestra y le dijo: <br>—Gracias por cuidarnos, maestra. Tenía mucho miedo.</p>
+                        <p id="c-p7" class="transition-all duration-300">La maestra le sonrió y respondió con ternura: <br>—Sentir miedo es natural, Sofía. Lo valioso es que supimos protegernos juntos y que nunca debemos dudar en pedir ayuda.</p>
+                        
+                        <div id="c-p8" class="text-vibrant-blue font-black text-2xl md:text-3xl text-center mt-12 bg-blue-50 p-6 rounded-3xl border-4 border-vibrant-blue shadow-inner">
+                            <i class="fas fa-feather-alt text-vibrant-cyan mr-2"></i> Enseñanza: Los simulacros nos preparan, los adultos de confianza nos cuidan y la empatía nos permite sanar. Ser fuertes también significa acompañar a quien siente miedo.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MÓDULO 7: HOMENAJE A MAESTROS HÉROES -->
+        <section class="bg-vibrant-yellow py-20 md:py-24 px-6 relative overflow-hidden text-vibrant-dark">
+            <div class="max-w-5xl mx-auto relative z-10 text-center">
+                <i class="fas fa-star text-6xl md:text-7xl text-white mb-6 icon-3d animate-float"></i>
+                <h2 class="text-4xl md:text-7xl font-black mb-10 text-outline text-white drop-shadow-xl leading-tight">A NUESTROS MAESTROS HÉROES</h2>
+                
+                <div class="bg-white/95 backdrop-blur-md p-8 md:p-16 rounded-[3rem] shadow-2xl border-8 border-white text-left mx-auto transform md:rotate-1">
+                    <button onclick="playTribute()" class="btn-3d bg-vibrant-coral hover:bg-coral-500 text-white font-black py-4 px-8 rounded-full text-xl md:text-2xl shadow-3d-btn border-4 border-white mb-10 mx-auto flex items-center justify-center gap-3 focus:outline-none focus:ring-4 focus:ring-vibrant-blue">
+                        <i class="fas fa-music"></i> Escuchar Homenaje
+                    </button>
+                    
+                    <div class="text-xl md:text-3xl font-bold leading-relaxed space-y-6 md:space-y-8 text-gray-800">
+                        <p>Cuando la tierra tembló en Panamá Oeste, muchos maestros se convirtieron en refugio, orientación y calma para sus niños. Con vocación y serenidad, protegieron a sus estudiantes y les dieron seguridad.</p>
+                        <p>Queridos educadores de Panamá Oeste: gracias por guiar, abrazar y velar por cada vida en el aula. Quizás los niños no recuerden cada palabra de aquel día, pero jamás olvidarán quién estuvo a su lado cuando sintieron miedo.</p>
+                        <div class="text-vibrant-coral font-black text-2xl md:text-4xl mt-10 bg-coral-50 p-6 md:p-10 rounded-3xl border-l-8 border-vibrant-coral shadow-inner">
+                            Porque educar también es proteger, y hay huellas del corazón que duran toda la vida. ¡Gracias por ser luz en medio de la incertidumbre!
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MÓDULO 8: PALABRAS QUE NOS DAN FUERZA -->
+        <section class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl md:text-6xl font-black text-vibrant-blue mb-4">Palabras que nos dan fuerza</h2>
+                <p class="text-xl md:text-2xl font-bold text-gray-600">Toca cada tarjeta para escuchar un mensaje especial dedicado a ti.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <button onclick="speakAndShow('Eres valiente incluso cuando sientes miedo. Tus emociones importan, no estás solo y merecen ser escuchadas.', 'Para ti, estudiante', 'fas fa-child', 'text-vibrant-cyan')" class="card-3d p-6 md:p-8 bg-vibrant-cyan text-center border-4 border-white hover:bg-cyan-400 flex flex-col justify-center h-full focus:outline-none focus:ring-4 focus:ring-vibrant-yellow transition-all">
+                    <i class="fas fa-child-reaching text-6xl text-white mb-4 icon-3d"></i>
+                    <h3 class="text-2xl font-black text-white">Para los Niños y Jóvenes</h3>
+                    <p class="text-white/90 text-sm font-bold mt-2">Toca para escuchar</p>
+                </button>
+                <button onclick="speakAndShow('Gracias por ser guía, calma y esperanza cuando más se necesitaba. Su vocación deja huella y merece respeto, cuidado y reconocimiento.', 'Para Docentes', 'fas fa-chalkboard-teacher', 'text-vibrant-coral')" class="card-3d p-6 md:p-8 bg-vibrant-coral text-center border-4 border-white hover:bg-coral-400 flex flex-col justify-center h-full focus:outline-none focus:ring-4 focus:ring-vibrant-yellow transition-all">
+                    <i class="fas fa-chalkboard-teacher text-6xl text-white mb-4 icon-3d"></i>
+                    <h3 class="text-2xl font-black text-white">Para Docentes</h3>
+                    <p class="text-white/90 text-sm font-bold mt-2">Toca para escuchar</p>
+                </button>
+                <button onclick="speakAndShow('Un abrazo, una escucha atenta y una palabra sincera devuelven la seguridad en el hogar. La paciencia también es una forma de amor.', 'Para Familias', 'fas fa-house-user', 'text-vibrant-green')" class="card-3d p-6 md:p-8 bg-vibrant-green text-center border-4 border-white hover:bg-green-400 flex flex-col justify-center h-full focus:outline-none focus:ring-4 focus:ring-vibrant-yellow transition-all">
+                    <i class="fas fa-house-user text-6xl text-white mb-4 icon-3d"></i>
+                    <h3 class="text-2xl font-black text-white">Para las Familias</h3>
+                    <p class="text-white/90 text-sm font-bold mt-2">Toca para escuchar</p>
+                </button>
+                <button onclick="speakAndShow('Más preparados, más unidos, más humanos. Nuestra mayor fortaleza como Panamá Oeste está en cuidarnos y apoyarnos unos a otros.', 'Para Todos', 'fas fa-users', 'text-vibrant-yellow')" class="card-3d p-6 md:p-8 bg-vibrant-yellow text-center border-4 border-white hover:bg-yellow-400 flex flex-col justify-center h-full focus:outline-none focus:ring-4 focus:ring-vibrant-blue transition-all">
+                    <i class="fas fa-users text-6xl text-vibrant-dark mb-4 icon-3d"></i>
+                    <h3 class="text-2xl font-black text-vibrant-dark">Para la Comunidad</h3>
+                    <p class="text-vibrant-dark/80 text-sm font-bold mt-2">Toca para escuchar</p>
+                </button>
+            </div>
+        </section>
+
+        <!-- MÓDULO 9: ÁRBOL DE LA ESPERANZA (INTERACTIVO LOCALSTORAGE) -->
+        <section id="arbol-esperanza" class="max-w-7xl mx-auto px-6 pb-10 scroll-mt-24">
+            <div class="bg-white rounded-[4rem] p-6 md:p-12 shadow-3d-card border-8 border-vibrant-green text-center relative overflow-hidden">
+                <h2 class="text-4xl md:text-6xl font-black text-vibrant-green mb-4">Nuestro Árbol de la Esperanza</h2>
+                <p class="text-lg md:text-2xl font-bold text-gray-600 mb-8 max-w-3xl mx-auto">
+                    Toca las hojas para leer los mensajes de ánimo, o escribe tu propio pensamiento para que florezca en el árbol.
+                </p>
+                
+                <!-- Controles de Entrada y Reinicio -->
+                <div class="flex flex-col md:flex-row justify-center items-center gap-4 mb-10 z-20 relative px-4 max-w-4xl mx-auto">
+                    <input type="text" id="leaf-input" maxlength="40" placeholder="Escribe un mensaje corto de esperanza..." class="w-full md:w-auto flex-grow p-4 rounded-full font-bold text-lg border-4 border-green-200 focus:border-vibrant-green outline-none shadow-inner bg-gray-50 focus:ring-4 focus:ring-green-100" aria-label="Escribe tu mensaje para el árbol">
+                    
+                    <button onclick="addCustomLeaf()" class="btn-3d bg-vibrant-green hover:bg-green-500 text-white font-black py-4 px-8 rounded-full text-xl shadow-md border-2 border-white w-full sm:w-auto flex-shrink-0 focus:outline-none focus:ring-4 focus:ring-yellow-400">
+                        <i class="fas fa-leaf mr-2"></i> Colgar Hoja
+                    </button>
+                    
+                    <button onclick="requestResetTree()" class="btn-3d bg-gray-500 hover:bg-gray-600 text-white font-black py-3 px-6 rounded-full text-lg shadow-md border-2 border-white w-full sm:w-auto flex-shrink-0 focus:outline-none focus:ring-4 focus:ring-yellow-400 mt-2 md:mt-0 ml-auto md:ml-4">
+                        <i class="fas fa-redo mr-2"></i> Reiniciar árbol
+                    </button>
+                </div>
+
+                <!-- Estructura del Árbol 3D Flexible -->
+                <div class="relative w-full mx-auto flex flex-col items-center z-10 pt-4">
+                    <!-- Copa del árbol -->
+                    <div class="tree-canopy-container">
+                        <div id="tree-canopy" class="tree-canopy-bg min-h-[320px] md:min-h-[420px] flex flex-wrap justify-center items-center content-center p-8 md:p-12 gap-3 md:gap-4 shadow-2xl transition-all">
+                            <!-- Inyectado vía JavaScript -->
+                        </div>
+                    </div>
+                    
+                    <!-- Tronco 3D -->
+                    <div class="tree-trunk w-24 md:w-32 h-40 md:h-48 -mt-10 z-0 shadow-2xl"></div>
+                    
+                    <!-- Base y Raíces -->
+                    <div class="relative w-full flex justify-center -mt-6 z-20 max-w-lg">
+                        <div class="tree-root w-20 md:w-28 h-12 rounded-[50%] absolute -left-2 md:left-10 top-1 transform -rotate-12"></div>
+                        <div class="tree-root w-20 md:w-28 h-12 rounded-[50%] absolute -right-2 md:right-10 top-1 transform rotate-12"></div>
+                        
+                        <!-- Colina de césped -->
+                        <div class="w-full h-16 md:h-20 bg-green-500 rounded-[50%] shadow-inner-light border-t-8 border-green-600 relative z-30 flex justify-around items-center px-10 -mb-4">
+                            <i class="fas fa-flower text-vibrant-coral text-2xl animate-pulse"></i>
+                            <i class="fas fa-flower text-vibrant-yellow text-xl animate-pulse" style="animation-delay: 1s;"></i>
+                            <i class="fas fa-flower text-vibrant-cyan text-2xl animate-pulse" style="animation-delay: 0.5s;"></i>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- MÓDULO 10: EN CASA, NOS CUIDAMOS CON AMOR -->
+        <section id="en-familia" class="max-w-7xl mx-auto px-6 pb-16 scroll-mt-24">
+            <div class="bg-gradient-to-b from-white to-pink-50 rounded-[4rem] p-8 md:p-16 shadow-3d-card border-8 border-vibrant-coral relative overflow-hidden">
+                <div class="absolute -right-20 -top-20 opacity-10 pointer-events-none">
+                    <i class="fas fa-heart text-[30rem] text-vibrant-coral"></i>
+                </div>
+
+                <div class="text-center relative z-10 mb-12">
+                    <div class="inline-block bg-vibrant-coral text-white p-6 rounded-full shadow-lg mb-6 transform -rotate-3 border-4 border-white">
+                        <i class="fas fa-home text-5xl icon-3d"></i>
+                    </div>
+                    <h2 class="text-4xl md:text-6xl font-black text-vibrant-coral mb-6">En casa, nos cuidamos con amor</h2>
+                    <p class="text-xl md:text-2xl font-bold text-gray-700 max-w-4xl mx-auto bg-white p-6 rounded-3xl shadow-sm border-2 border-pink-100 leading-relaxed">
+                        “Nuestro hogar es un refugio para escucharnos y abrazarnos. Tras momentos difíciles, el cariño, la paciencia y la unión familiar nos ayudan a recuperar la serenidad. No tenemos que fingir ser fuertes todo el tiempo: expresar lo que sentimos nos une aún más.”
+                    </p>
+                </div>
+
+                <div class="grid lg:grid-cols-2 gap-8 relative z-10 mb-12">
+                    <!-- Preguntas para conversar en familia -->
+                    <div class="bg-white p-8 rounded-3xl shadow-md border-4 border-vibrant-cyan flex flex-col h-full">
+                        <h3 class="text-2xl md:text-3xl font-black text-vibrant-cyan mb-4"><i class="fas fa-book-open mr-3"></i> Un cuento, un abrazo y mil esperanzas</h3>
+                        <p class="text-lg font-bold text-gray-600 mb-6 flex-grow">
+                            Invita a tu familia a repasar el cuento de nuestro mural. Al terminar, compartan estas preguntas sencillas:
+                        </p>
+                        <ul class="space-y-3 text-lg font-bold text-gray-700 mb-8 ml-2">
+                            <li class="flex items-start gap-3"><i class="fas fa-comment-dots text-vibrant-yellow mt-1"></i> ¿Qué sentiste durante el sismo del 09 de octubre?</li>
+                            <li class="flex items-start gap-3"><i class="fas fa-comment-dots text-vibrant-yellow mt-1"></i> ¿Qué podemos hacer para ayudarnos cuando alguien tiene miedo?</li>
+                            <li class="flex items-start gap-3"><i class="fas fa-comment-dots text-vibrant-yellow mt-1"></i> ¿Quiénes son las personas que nos hacen sentir seguros?</li>
+                            <li class="flex items-start gap-3"><i class="fas fa-comment-dots text-vibrant-yellow mt-1"></i> ¿Qué podemos hacer hoy para demostrarnos cariño en casa?</li>
+                        </ul>
+                        <button onclick="document.getElementById('cuento').scrollIntoView({behavior: 'smooth'})" class="btn-3d w-full bg-vibrant-cyan hover:bg-cyan-500 text-white font-black py-4 rounded-xl text-xl shadow-md border-2 border-white focus:outline-none focus:ring-4 focus:ring-yellow-400 mt-auto">
+                            ¡Leer el cuento juntos!
+                        </button>
+                    </div>
+
+                    <!-- 5 Minutos de Amor Familiar -->
+                    <div class="bg-vibrant-yellow p-8 rounded-3xl shadow-md border-4 border-white flex flex-col h-full text-vibrant-dark">
+                        <div class="flex items-center gap-4 mb-6">
+                            <h3 class="text-2xl md:text-3xl font-black"><i class="fas fa-clock mr-3 text-vibrant-coral"></i> Cinco minutos de amor familiar</h3>
+                        </div>
+                        <p class="text-lg font-bold mb-6">Pequeñas acciones diarias que llenan de seguridad nuestro hogar:</p>
+                        
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6 flex-grow">
+                            <div class="bg-white/70 p-4 rounded-2xl flex items-center gap-3 font-bold"><i class="fas fa-hands-holding text-vibrant-coral text-xl"></i> Dar un abrazo sincero.</div>
+                            <div class="bg-white/70 p-4 rounded-2xl flex items-center gap-3 font-bold"><i class="fas fa-star text-vibrant-blue text-xl"></i> Decirle a cada uno algo que admiramos.</div>
+                            <div class="bg-white/70 p-4 rounded-2xl flex items-center gap-3 font-bold"><i class="fas fa-palette text-vibrant-green text-xl"></i> Dibujar juntos un recuerdo bonito.</div>
+                            <div class="bg-white/70 p-4 rounded-2xl flex items-center gap-3 font-bold"><i class="fas fa-ear-listen text-purple-600 text-xl"></i> Escuchar con atención cómo se siente cada uno.</div>
+                            <div class="bg-white/70 p-4 rounded-2xl flex items-center gap-3 font-bold"><i class="fas fa-pray text-vibrant-cyan text-xl"></i> Orar o meditar juntos por la paz.</div>
+                            <div class="bg-white/70 p-4 rounded-2xl flex items-center gap-3 font-bold"><i class="fas fa-heart text-vibrant-coral text-xl"></i> Agradecer por estar juntos hoy.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- El Frasco de los Abrazos y la Gratitud -->
+                <div class="bg-white p-8 md:p-12 rounded-[3rem] shadow-md border-4 border-pink-200 mb-12 relative z-10">
+                    <div class="text-center mb-8">
+                        <i class="fas fa-jar text-6xl text-vibrant-coral mb-4 icon-3d"></i>
+                        <h3 class="text-3xl md:text-4xl font-black text-vibrant-dark mb-4">El frasco de los abrazos y la gratitud</h3>
+                        <p class="text-xl font-bold text-gray-600">¡Escribe algo bonito para tu familia! Los mensajes se guardan en este dispositivo para que los lean juntos.</p>
+                    </div>
+
+                    <div class="flex flex-col md:flex-row gap-4 mb-8 max-w-4xl mx-auto">
+                        <select id="frasco-prefix" class="p-4 rounded-xl font-bold text-lg border-4 border-pink-100 focus:border-vibrant-coral outline-none bg-pink-50 md:w-1/3 cursor-pointer text-gray-700">
+                            <option value="Hoy doy gracias por...">Hoy doy gracias por...</option>
+                            <option value="Me siento amado cuando...">Me siento amado cuando...</option>
+                            <option value="Quiero decirle a mi familia...">Quiero decirle a mi familia...</option>
+                            <option value="Algo que me hace sentir seguro es...">Algo que me hace sentir seguro es...</option>
+                        </select>
+                        <input type="text" id="frasco-input" placeholder="Escribe el resto de tu frase aquí..." class="p-4 rounded-xl font-bold text-lg border-4 border-pink-100 focus:border-vibrant-coral outline-none flex-grow bg-white" aria-label="Completar mensaje del frasco">
+                        <button onclick="saveFrascoMessage()" class="btn-3d bg-vibrant-coral hover:bg-coral-500 text-white font-black py-4 px-8 rounded-xl text-xl shadow-md border-2 border-white md:w-auto w-full focus:outline-none focus:ring-4 focus:ring-yellow-400 flex-shrink-0">
+                            <i class="fas fa-paper-plane mr-2"></i> Guardar
+                        </button>
+                    </div>
+
+                    <!-- Contenedor de Mensajes Guardados -->
+                    <div id="frasco-mensajes" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6 min-h-[100px] p-4 bg-pink-50/50 rounded-3xl border-2 border-dashed border-pink-200">
+                        <!-- Inyectado vía JS -->
+                    </div>
+                    
+                    <div class="text-center mt-6">
+                        <button onclick="clearAllFrasco()" class="text-gray-400 hover:text-vibrant-coral font-bold underline transition-colors focus:outline-none text-sm">
+                            Borrar todos los mensajes guardados en este dispositivo
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Plan Familiar de Seguridad y Oración de Agradecimiento -->
+                <div class="grid lg:grid-cols-2 gap-8 relative z-10 mb-12">
+                    <!-- Plan Familiar de Seguridad -->
+                    <div class="bg-white p-8 rounded-3xl shadow-md border-4 border-vibrant-green h-full">
+                        <h3 class="text-2xl md:text-3xl font-black text-vibrant-green mb-4"><i class="fas fa-clipboard-check mr-3"></i> Nuestro plan familiar de seguridad</h3>
+                        <p class="text-lg font-bold text-gray-600 mb-6">Revisen juntos en casa y marquen los pasos completados:</p>
+                        
+                        <ul class="space-y-4 text-lg font-bold text-gray-700">
+                            <li class="flex items-start gap-4 cursor-pointer hover:text-vibrant-green transition-colors" onclick="this.querySelector('input').click()">
+                                <input type="checkbox" class="w-6 h-6 mt-1 text-vibrant-green rounded accent-vibrant-green flex-shrink-0"> 
+                                <span>Identificamos los lugares más seguros dentro de la vivienda, lejos de vidrios y lámparas.</span>
+                            </li>
+                            <li class="flex items-start gap-4 cursor-pointer hover:text-vibrant-green transition-colors" onclick="this.querySelector('input').click()">
+                                <input type="checkbox" class="w-6 h-6 mt-1 text-vibrant-green rounded accent-vibrant-green flex-shrink-0"> 
+                                <span>Practicamos juntos cómo agacharse, cubrirse y agarrarse en casa.</span>
+                            </li>
+                            <li class="flex items-start gap-4 cursor-pointer hover:text-vibrant-green transition-colors" onclick="this.querySelector('input').click()">
+                                <input type="checkbox" class="w-6 h-6 mt-1 text-vibrant-green rounded accent-vibrant-green flex-shrink-0"> 
+                                <span>Acordamos un punto de encuentro familiar en un lugar seguro fuera de casa.</span>
+                            </li>
+                            <li class="flex items-start gap-4 cursor-pointer hover:text-vibrant-green transition-colors" onclick="this.querySelector('input').click()">
+                                <input type="checkbox" class="w-6 h-6 mt-1 text-vibrant-green rounded accent-vibrant-green flex-shrink-0"> 
+                                <span>Preparamos o revisamos nuestra mochila de emergencia con agua, linterna y radio.</span>
+                            </li>
+                            <li class="flex items-start gap-4 cursor-pointer hover:text-vibrant-green transition-colors" onclick="this.querySelector('input').click()">
+                                <input type="checkbox" class="w-6 h-6 mt-1 text-vibrant-green rounded accent-vibrant-green flex-shrink-0"> 
+                                <span>Sabemos cómo comunicarnos por mensaje de texto si las líneas celulares se saturan.</span>
+                            </li>
+                            <li class="flex items-start gap-4 cursor-pointer hover:text-vibrant-green transition-colors" onclick="this.querySelector('input').click()">
+                                <input type="checkbox" class="w-6 h-6 mt-1 text-vibrant-green rounded accent-vibrant-green flex-shrink-0"> 
+                                <span>Los niños saben reconocer a los adultos de confianza y no acercarse a cables caídos.</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Mensaje de Fe y Agradecimiento a Dios -->
+                    <div class="bg-yellow-50 p-8 rounded-3xl shadow-md border-4 border-vibrant-yellow flex flex-col h-full text-center relative overflow-hidden">
+                        <div class="absolute top-0 left-0 w-full h-40 opacity-30 pointer-events-none">
+                            <svg viewBox="0 0 400 150" class="w-full h-full" preserveAspectRatio="none">
+                                <circle cx="200" cy="150" r="100" fill="#FBBF24" filter="blur(8px)" />
+                                <path d="M 0,150 Q 100,100 200,150 T 400,150 L 400,150 L 0,150 Z" fill="#F59E0B" opacity="0.5" />
+                            </svg>
+                        </div>
+                        
+                        <i class="fas fa-sun text-6xl text-vibrant-yellow mb-4 icon-3d relative z-10 mt-4"></i>
+                        <h3 class="text-2xl md:text-3xl font-black text-amber-600 mb-6 relative z-10">Gracias, Dios, por el regalo de la vida</h3>
+                        
+                        <div class="text-lg md:text-xl font-bold text-gray-700 italic leading-relaxed relative z-10 flex-grow">
+                            <p class="mb-4">“Gracias, Dios, por regalarnos un nuevo día, por la vida de nuestros seres queridos y por las manos solidarias que nos acompañaron en los momentos de temor. Gracias por cada persona que nos cuidó, por quienes nos dieron calma y por la esperanza que renace en nuestros corazones.</p>
+                            <p class="mb-4">Ayúdanos a vivir con amor, a cuidar unos de otros y a valorar cada abrazo, cada sonrisa y cada momento en familia. Que en nuestras escuelas y hogares nunca falten la paz, la fraternidad y la fe.</p>
+                            <p class="text-vibrant-orange font-black">¡Gracias, Dios, porque estamos vivos y podemos seguir construyendo juntos un porvenir de amor y esperanza! Amén.”</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cierre Motivador Familiar -->
+                <div class="text-center mt-12 bg-white/80 backdrop-blur-sm p-8 rounded-3xl shadow-sm border-2 border-white relative z-10">
+                    <h2 class="text-2xl md:text-4xl font-black text-vibrant-coral leading-tight">
+                        “La verdadera fortaleza comienza en casa: con una conversación sincera, una mano que acompaña y un abrazo lleno de amor.<br>
+                        <span class="text-vibrant-blue">¡Panamá Oeste se levanta cuando aprendemos a cuidarnos juntos!”</span>
+                    </h2>
+                </div>
+            </div>
+        </section>
+
+        <!-- MÓDULO 11: DIRECTORIO DE EMERGENCIAS DE PANAMÁ OESTE -->
+        <section id="emergencias" class="max-w-7xl mx-auto px-6 pb-12 scroll-mt-24">
+            <div class="bg-vibrant-dark text-white rounded-[3.5rem] p-8 md:p-14 border-8 border-red-500 shadow-2xl relative overflow-hidden">
+                <div class="text-center mb-10">
+                    <div class="inline-block bg-red-600 text-white font-black px-6 py-2 rounded-full uppercase tracking-widest mb-3 shadow text-sm">
+                        <i class="fas fa-phone-alt mr-2"></i> Directorio Oficial de Ayuda
+                    </div>
+                    <h2 class="text-3xl md:text-5xl font-black text-white mb-4">Líneas de Emergencia en Panamá Oeste</h2>
+                    <p class="text-lg md:text-xl font-bold text-gray-300 max-w-2xl mx-auto">
+                        Guarda estos números en tu teléfono. En caso de una emergencia real o réplica fuerte, comunícate de inmediato.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- SINAPROC -->
+                    <div class="bg-white/10 p-6 rounded-2xl border-2 border-red-400 text-center flex flex-col justify-between backdrop-blur">
+                        <div>
+                            <i class="fas fa-bullhorn text-4xl text-vibrant-yellow mb-3"></i>
+                            <h4 class="text-xl font-black text-white">SINAPROC</h4>
+                            <p class="text-xs font-bold text-gray-300 mt-1">Protección Civil Nacional</p>
+                            <p class="text-2xl font-black text-vibrant-yellow mt-3">911 / 520-4429</p>
+                            <p class="text-xs text-gray-400 mt-1">Desde celular: *335</p>
+                        </div>
+                        <a href="tel:911" class="btn-3d bg-vibrant-yellow text-vibrant-dark font-black py-2.5 px-4 rounded-xl text-base mt-4 block">
+                            <i class="fas fa-phone mr-1"></i> Llamar
+                        </a>
+                    </div>
+
+                    <!-- BOMBEROS -->
+                    <div class="bg-white/10 p-6 rounded-2xl border-2 border-red-400 text-center flex flex-col justify-between backdrop-blur">
+                        <div>
+                            <i class="fas fa-fire-extinguisher text-4xl text-vibrant-coral mb-3"></i>
+                            <h4 class="text-xl font-black text-white">BOMBEROS</h4>
+                            <p class="text-xs font-bold text-gray-300 mt-1">Zona Regional Panamá Oeste</p>
+                            <p class="text-2xl font-black text-vibrant-coral mt-3">103</p>
+                            <p class="text-xs text-gray-400 mt-1">Atención rápida de incendios y rescate</p>
+                        </div>
+                        <a href="tel:103" class="btn-3d bg-vibrant-coral text-white font-black py-2.5 px-4 rounded-xl text-base mt-4 block">
+                            <i class="fas fa-phone mr-1"></i> Llamar 103
+                        </a>
+                    </div>
+
+                    <!-- POLICÍA NACIONAL -->
+                    <div class="bg-white/10 p-6 rounded-2xl border-2 border-red-400 text-center flex flex-col justify-between backdrop-blur">
+                        <div>
+                            <i class="fas fa-shield-alt text-4xl text-vibrant-cyan mb-3"></i>
+                            <h4 class="text-xl font-black text-white">POLICÍA NACIONAL</h4>
+                            <p class="text-xs font-bold text-gray-300 mt-1">Seguridad y Tránsito</p>
+                            <p class="text-2xl font-black text-vibrant-cyan mt-3">104</p>
+                            <p class="text-xs text-gray-400 mt-1">Zona Policial de Panamá Oeste</p>
+                        </div>
+                        <a href="tel:104" class="btn-3d bg-vibrant-cyan text-white font-black py-2.5 px-4 rounded-xl text-base mt-4 block">
+                            <i class="fas fa-phone mr-1"></i> Llamar 104
+                        </a>
+                    </div>
+
+                    <!-- CRUZ ROJA / SUME -->
+                    <div class="bg-white/10 p-6 rounded-2xl border-2 border-red-400 text-center flex flex-col justify-between backdrop-blur">
+                        <div>
+                            <i class="fas fa-truck-medical text-4xl text-vibrant-green mb-3"></i>
+                            <h4 class="text-xl font-black text-white">CRUZ ROJA / SUME</h4>
+                            <p class="text-xs font-bold text-gray-300 mt-1">Atención Médica Prehospitalaria</p>
+                            <p class="text-2xl font-black text-vibrant-green mt-3">*455 / 911</p>
+                            <p class="text-xs text-gray-400 mt-1">Primeros auxilios y ambulancias</p>
+                        </div>
+                        <a href="tel:911" class="btn-3d bg-vibrant-green text-white font-black py-2.5 px-4 rounded-xl text-base mt-4 block">
+                            <i class="fas fa-phone mr-1"></i> Llamar 911
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER FINAL MOTIVADOR E INSTITUCIONAL -->
+    <footer class="bg-vibrant-dark pt-16 pb-12 px-6 border-t-8 border-vibrant-cyan relative overflow-hidden">
+        <div class="absolute inset-0 opacity-15 pointer-events-none bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-vibrant-yellow via-transparent to-transparent blur-3xl"></div>
+        
+        <div class="max-w-7xl mx-auto relative z-10 flex flex-col items-center">
+            
+            <div class="flex justify-center items-end gap-6 md:gap-12 mb-12 border-b-2 border-white/20 pb-8 w-full flex-wrap">
+                <div class="text-center flex flex-col items-center">
+                    <i class="fas fa-child text-6xl md:text-7xl text-vibrant-yellow icon-3d animate-float"></i>
+                </div>
+                <div class="text-center flex flex-col items-center">
+                    <i class="fas fa-chalkboard-teacher text-7xl md:text-8xl text-vibrant-cyan icon-3d animate-float" style="animation-delay: 1s"></i>
+                </div>
+                <div class="text-center flex flex-col items-center">
+                    <i class="fas fa-house-user text-6xl md:text-7xl text-vibrant-coral icon-3d animate-float" style="animation-delay: 2s"></i>
+                </div>
+                <div class="text-center flex flex-col items-center">
+                    <i class="fas fa-school text-7xl md:text-8xl text-white icon-3d animate-float" style="animation-delay: 1.5s"></i>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 w-full mb-16">
+                <div class="bg-white/10 p-6 rounded-2xl backdrop-blur-sm border-l-8 border-vibrant-yellow shadow-md flex flex-col h-full">
+                    <h3 class="text-xl font-black text-vibrant-yellow mb-3 uppercase">A los estudiantes</h3>
+                    <p class="text-white text-lg font-bold flex-grow">Aprendimos a prepararnos. Tienes derecho a sentir, preguntar y pedir compañía y ayuda.</p>
+                </div>
+                <div class="bg-white/10 p-6 rounded-2xl backdrop-blur-sm border-l-8 border-vibrant-cyan shadow-md flex flex-col h-full">
+                    <h3 class="text-xl font-black text-vibrant-cyan mb-3 uppercase">A los docentes</h3>
+                    <p class="text-white text-lg font-bold flex-grow">Su serenidad y vocación dejan huella; su acompañamiento fortalece el corazón de Panamá Oeste.</p>
+                </div>
+                <div class="bg-white/10 p-6 rounded-2xl backdrop-blur-sm border-l-8 border-vibrant-coral shadow-md flex flex-col h-full">
+                    <h3 class="text-xl font-black text-vibrant-coral mb-3 uppercase">A las familias</h3>
+                    <p class="text-white text-lg font-bold flex-grow">Su presencia, su paciencia y su amor son el pilar que da seguridad en el hogar.</p>
+                </div>
+                <div class="bg-white/10 p-6 rounded-2xl backdrop-blur-sm border-l-8 border-vibrant-green shadow-md flex flex-col h-full">
+                    <h3 class="text-xl font-black text-vibrant-green mb-3 uppercase">A toda Panamá Oeste</h3>
+                    <p class="text-white text-lg font-bold flex-grow">Más prevención, más empatía, más solidaridad. ¡Juntos somos invencibles!</p>
+                </div>
+            </div>
+            
+            <div class="w-full max-w-4xl mx-auto text-center">
+                <h2 class="text-3xl md:text-5xl font-black text-white mb-10 leading-tight text-outline drop-shadow-lg">
+                    CUANDO LA COMUNIDAD SE PREPARA, LA ESCUELA SE UNE Y LAS FAMILIAS SE ACOMPAÑAN, LA ESPERANZA CRECE.<br><br>
+                    <span class="text-vibrant-yellow">¡PANAMÁ OESTE, SIGAMOS ADELANTE, JUNTOS Y CON EL CORAZÓN LLENO DE ESPERANZA!</span>
+                </h2>
+                
+                <div class="mt-8 bg-white/20 p-6 rounded-2xl inline-block backdrop-blur-md border border-white/30 text-center">
+                    <p class="text-vibrant-yellow font-black tracking-widest uppercase text-xl md:text-2xl">
+                        Dirección Regional de Educación de Panamá Oeste
+                    </p>
+                    <p class="text-white/80 font-bold text-sm mt-1">Campaña de Sensibilización, Convivencia Escolar y Prevención Sísmica</p>
+                </div>
+            </div>
+            
+            <p class="text-gray-400 text-sm mt-12 max-w-4xl mx-auto font-bold text-center leading-relaxed">
+                *Información pedagógica basada en los protocolos de protección civil del Sistema Nacional de Protección Civil (SINAPROC) y del Ministerio de Educación (MEDUCA). Ante cualquier emergencia, sigue las indicaciones de las autoridades y los comités escolares de seguridad.
+            </p>
+        </div>
+    </footer>
+
+    <!-- LÓGICA DE INTERACCIÓN, AUDIO Y LOCALSTORAGE -->
+    <script>
+        // --- SISTEMA DE AUDIO Y SÍNTESIS DE VOZ ---
+        const synth = window.speechSynthesis;
+        let isMuted = true; 
+        let audioCtx = null;
+
+        function initAudio() {
+            if(!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            if(audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+        }
+
+        function updateAudioUI() {
+            const btn = document.getElementById('mute-btn');
+            const navBtn = document.getElementById('nav-mute-btn');
+            const navIcon = document.getElementById('nav-mute-icon');
+            const navText = document.getElementById('nav-mute-text');
+            const muteIcon = document.getElementById('mute-icon');
+
+            if(isMuted) {
+                if(btn) {
+                    btn.classList.replace('bg-vibrant-blue', 'bg-gray-500');
+                    muteIcon.className = 'fas fa-volume-mute';
+                }
+                if(navBtn) {
+                    navIcon.className = 'fas fa-volume-mute text-gray-500';
+                    navText.innerText = 'Sonido silenciado';
+                }
+                stopAudio();
+            } else {
+                if(btn) {
+                    btn.classList.replace('bg-gray-500', 'bg-vibrant-blue');
+                    muteIcon.className = 'fas fa-volume-up';
+                }
+                if(navBtn) {
+                    navIcon.className = 'fas fa-volume-up text-vibrant-blue';
+                    navText.innerText = 'Sonido activado';
+                }
+                initAudio();
+                playSFX(600, 'sine', 0.1); 
+            }
+        }
+
+        function toggleMute() {
+            isMuted = !isMuted;
+            updateAudioUI();
+        }
+
+        function stopAudio() {
+            if(synth) synth.cancel();
+            document.querySelectorAll('.reading-highlight').forEach(el => el.classList.remove('reading-highlight'));
+        }
+
+        function getBestSpanishVoice() {
+            if (!synth) return null;
+            const voices = synth.getVoices();
+            return voices.find(v => v.lang === 'es-PA') ||
+                   voices.find(v => v.lang === 'es-419') ||
+                   voices.find(v => v.lang.startsWith('es-MX')) ||
+                   voices.find(v => v.lang.startsWith('es-US')) ||
+                   voices.find(v => v.lang.startsWith('es-')) ||
+                   voices.find(v => v.lang.includes('Spanish')) || null;
+        }
+
+        function speak(text, callback) {
+            if(isMuted) return;
+            initAudio();
+            stopAudio();
+            
+            const utterance = new SpeechSynthesisUtterance(text);
+            const voice = getBestSpanishVoice();
+            if(voice) {
+                utterance.voice = voice;
+                utterance.lang = voice.lang;
+            } else {
+                utterance.lang = 'es-PA';
+            }
+            utterance.rate = 0.92;     
+            utterance.pitch = 1.05;    
+            
+            if(callback) {
+                utterance.onend = callback;
+            }
+            synth.speak(utterance);
+        }
+
+        function playSFX(freq = 400, type = 'sine', duration = 0.2) {
+            if(isMuted) return;
+            initAudio();
+            if(!audioCtx) return;
+            try {
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = type;
+                osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+                
+                gain.gain.setValueAtTime(0.05, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+                
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + duration);
+            } catch(e) {
+                console.warn('Audio SFX error:', e);
+            }
+        }
+
+        function playTributeMusic() {
+            if(isMuted) return;
+            initAudio();
+            const notes = [261.63, 329.63, 392.00, 523.25];
+            notes.forEach((freq, i) => {
+                setTimeout(() => playSFX(freq, 'sine', 2.0), i * 400); 
+            });
+        }
+
+        // --- SISTEMA MODALES GLOBALES ---
+        function playWelcome() {
+            if(isMuted) toggleMute(); 
+            playSFX(523.25, 'triangle', 0.5);
+            speak('¡Hola, pequeños grandes valientes de Panamá Oeste! Recordamos lo vivido el pasado 9 de octubre. Aprendimos a protegernos en los simulacros y hoy nos unimos para cuidarnos, apoyarnos y saber qué hacer mientras y después de un sismo. ¡Comencemos juntos esta aventura de esperanza!');
+        }
+
+        function showModal(title, msg, iconClass, colorClass) {
+            const modal = document.getElementById('custom-modal');
+            document.getElementById('modal-icon').className = `text-7xl mb-6 icon-3d ${iconClass} ${colorClass}`;
+            document.getElementById('modal-title').innerText = title;
+            document.getElementById('modal-title').className = `text-3xl md:text-4xl font-black mb-4 ${colorClass}`;
+            document.getElementById('modal-message').innerText = msg;
+            
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                document.getElementById('modal-content').classList.remove('scale-95');
+            }, 10);
+            playSFX(800, 'square', 0.1);
+        }
+
+        function closeModal() {
+            document.getElementById('modal-content').classList.add('scale-95');
+            setTimeout(() => {
+                document.getElementById('custom-modal').classList.add('hidden');
+            }, 300);
+        }
+
+        // --- LIGHTBOX DE ILUSTRACIÓN ---
+        function openImageLightbox() {
+            const modal = document.getElementById('image-lightbox-modal');
+            const img = document.getElementById('story-img');
+            const lightboxImg = document.getElementById('lightbox-img');
+            if(img && lightboxImg) {
+                lightboxImg.src = img.src;
+            }
+            modal.classList.remove('hidden');
+            playSFX(600, 'sine', 0.1);
+        }
+
+        function closeImageLightbox() {
+            document.getElementById('image-lightbox-modal').classList.add('hidden');
+        }
+
+        // --- MODAL DE CONFIRMACIÓN ---
+        let confirmCallback = null;
+        function showConfirmModal(title, msg, callback) {
+            const modal = document.getElementById('confirm-modal');
+            document.getElementById('confirm-title').innerText = title;
+            document.getElementById('confirm-message').innerText = msg;
+            confirmCallback = callback;
+            
+            modal.classList.remove('hidden');
+            setTimeout(() => document.getElementById('confirm-content').classList.remove('scale-95'), 10);
+        }
+        
+        function closeConfirmModal(result) {
+            document.getElementById('confirm-content').classList.add('scale-95');
+            setTimeout(() => {
+                document.getElementById('confirm-modal').classList.add('hidden');
+                if(result && confirmCallback) confirmCallback();
+            }, 300);
+        }
+
+        function checkGame(isCorrect, msg, icon, color) {
+            showModal(isCorrect ? '¡CORRECTO Y MUY BIEN!' : '¡ATENCIÓN!', msg, icon, color);
+            speak(msg);
+        }
+
+        // --- MOCHILA INTERACTIVA ---
+        let bpCount = 0;
+        function toggleBackpack(btn) {
+            if(btn.classList.contains('bg-vibrant-green')) return; 
+            
+            btn.classList.replace('bg-gray-50', 'bg-vibrant-green');
+            btn.classList.add('text-white');
+            btn.querySelectorAll('i, span').forEach(el => el.classList.replace(/text-\w+-\d+/, 'text-white'));
+            
+            bpCount++;
+            document.getElementById('backpack-count').innerText = bpCount;
+            playSFX(800 + (bpCount * 100), 'sine', 0.1);
+            
+            if(bpCount === 8) {
+                setTimeout(() => {
+                    showModal('¡MOCHILA DE PREVENCIÓN LISTA!', 'Excelente trabajo en equipo. Tener esta mochila preparada en casa le da tranquilidad y seguridad a toda la familia.', 'fas fa-check-circle', 'text-vibrant-green');
+                    speak('¡Felicidades! Han completado la mochila de emergencia familiar.');
+                }, 500);
+            }
+        }
+
+        // --- MANEJO DE EMOCIONES ---
+        const emotionData = {
+            'tranquilo': {t: '¡Qué hermosa serenidad!', m: 'Compartir tu tranquilidad ayuda a dar calma a los demás. Sigue siendo una presencia de paz.', i: 'fas fa-smile-beam', c: 'text-vibrant-green'},
+            'miedo': {t: 'Sentir miedo es natural', m: 'No tienes que dejar de sentir miedo de inmediato. Pide un abrazo, respira despacio y acompaña a alguien que te quiera.', i: 'fas fa-shield-heart', c: 'text-vibrant-blue'},
+            'triste': {t: 'Te acompañamos', m: 'Llorar, hablar o dibujar lo que sientes te ayudará a sanar poco a poco. No estás solo.', i: 'fas fa-tint', c: 'text-vibrant-cyan'},
+            'preocupado': {t: 'Estamos preparados', m: 'Es normal pensar en las réplicas. Recuerda que sabemos qué hacer y que los adultos estamos listos para protegerte.', i: 'fas fa-hands-helping', c: 'text-vibrant-yellow'},
+            'dormir': {t: 'Poco a poco', m: 'Mantén rutinas suaves antes de dormir y pide a tu familia que te acompañe unos minutos con una historia o canción.', i: 'fas fa-moon', c: 'text-purple-500'},
+            'hablar': {t: '¡Eres muy valiente!', m: 'Pedir ayuda y contar lo que sientes es de grandes valientes. Acércate a tu docente o familia.', i: 'fas fa-user-friends', c: 'text-vibrant-coral'}
+        };
+
+        function handleEmotion(type) {
+            const data = emotionData[type];
+            showModal(data.t, data.m, data.i, data.c);
+            speak(data.m);
+        }
+
+        // --- CUENTO INTERACTIVO ---
+        const cuentoTextos = [
+            "Aquella mañana, en una escuela de Panamá Oeste, Sofía, Mateo y sus compañeros aprendían, reían y compartían sus sueños.",
+            "Su maestra les recordó algo que habían practicado muchas veces en los simulacros: Niños, cuando practicamos, aprendemos a protegernos. No lo hacemos para tener miedo, sino para estar preparados.",
+            "De pronto, como ocurrió el pasado 9 de octubre, la tierra comenzó a moverse. Sofía sintió que su corazón latía muy rápido. Mateo miró a sus compañeros, sorprendido y asustado.",
+            "Entonces recordaron lo aprendido: ¡Agáchate, cúbrete y agárrate! Protegieron su cabeza y se colocaron bajo las mesas resistentes. Su maestra, con voz firme y serena, los guio en cada segundo.",
+            "Estoy aquí con ustedes. Mantengan la calma y sigan los pasos practicados, les decía. Aunque los adultos también sienten el temblor, su amor y vocación los mantuvieron cuidando a los niños.",
+            "Cuando el movimiento terminó, esperaron la indicación con serenidad. Luego evacuaron ordenadamente hacia el punto de encuentro oficial. Sofía abrazó a su maestra y le dijo: Gracias por cuidarnos, maestra. Tenía mucho miedo.",
+            "La maestra le sonrió y respondió con ternura: Sentir miedo es natural, Sofía. Lo valioso es que supimos protegernos juntos y que nunca debemos dudar en pedir ayuda."
+        ];
+        
+        let currentPIndex = 0;
+        function playCuento() {
+            if(isMuted) toggleMute(); 
+            stopAudio();
+            currentPIndex = 0;
+            readNextParagraph();
+        }
+
+        function readNextParagraph() {
+            if (currentPIndex >= cuentoTextos.length) return;
+            
+            if(currentPIndex > 0) {
+                const prev = document.getElementById(`c-p${currentPIndex}`);
+                if(prev) prev.classList.remove('reading-highlight');
+            }
+            
+            const currentEl = document.getElementById(`c-p${currentPIndex + 1}`);
+            if(currentEl) {
+                currentEl.classList.add('reading-highlight');
+                currentEl.scrollIntoView({behavior: 'smooth', block: 'center'});
+            }
+            
+            speak(cuentoTextos[currentPIndex], () => {
+                if(currentEl) currentEl.classList.remove('reading-highlight');
+                currentPIndex++;
+                readNextParagraph();
+            });
+        }
+
+        function playTribute() {
+            playTributeMusic();
+            setTimeout(() => {
+                speak('A nuestros maestros héroes de Panamá Oeste. Cuando la tierra tembló, muchos maestros se convirtieron en refugio, orientación y calma para sus niños. Con valentía y serenidad, acompañaron a sus estudiantes en uno de los momentos más difíciles. Queridos maestros: gracias por cuidar, orientar y proteger. Porque enseñar también es proteger, y hay huellas del corazón que duran toda la vida.');
+            }, 1000);
+        }
+
+        function speakAndShow(text, title, iconClass, colorClass) {
+            showModal(title, text, iconClass, colorClass);
+            speak(text);
+        }
+
+        // --- ÁRBOL DE LA ESPERANZA (LOCALSTORAGE) ---
+        const TREE_STORAGE_KEY = 'mural_panama_oeste_hojas';
+        const DEFAULT_LEAVES = [
+            { text: "Juntos somos más fuertes", color: "#FBBF24" },
+            { text: "Gracias maestros por cuidarnos", color: "#F43F5E" },
+            { text: "Tengo derecho a sentir miedo y pedir ayuda", color: "#06B6D4" },
+            { text: "Mi familia y yo estamos preparados", color: "#10B981" },
+            { text: "Panamá Oeste se levanta con amor", color: "#1D4ED8" },
+            { text: "Agáchate, cúbrete y agárrate", color: "#F97316" }
+        ];
+
+        let userLeaves = [];
+
+        function initTree() {
+            const saved = localStorage.getItem(TREE_STORAGE_KEY);
+            if(saved) {
+                try { 
+                    userLeaves = JSON.parse(saved); 
+                } catch(e) { 
+                    userLeaves = []; 
+                }
+            }
+            renderTree();
+        }
+
+        function renderTree() {
+            const canopy = document.getElementById('tree-canopy');
+            canopy.innerHTML = ''; 
+            
+            const allLeaves = [...DEFAULT_LEAVES, ...userLeaves];
+            allLeaves.forEach(leafData => {
+                createLeafElement(leafData.text, leafData.color, canopy);
+            });
+        }
+
+        function createLeafElement(word, color, container) {
+            const leaf = document.createElement('button');
+            const displayText = word.length > 25 ? word.substring(0, 22) + '...' : word;
+
+            leaf.className = 'text-white font-black py-3 px-5 text-sm md:text-base shadow-md border-2 border-white/50 leaf-shape leaf-anim inline-block flex-shrink-0 transition-transform hover:scale-110 focus:outline-none focus:ring-4 focus:ring-yellow-400';
+            
+            const rotation = (Math.random() * 20) - 10; 
+            leaf.style.backgroundColor = color;
+            leaf.style.transform = `rotate(${rotation}deg)`;
+            leaf.innerText = displayText;
+            
+            leaf.onclick = () => {
+                const colorClass = color === '#FBBF24' ? 'text-vibrant-yellow' : 'text-vibrant-green';
+                showModal('Mensaje en el árbol', word, 'fas fa-leaf', colorClass);
+                speak(word);
+            };
+            
+            container.appendChild(leaf);
+        }
+
+        const leafColors = ['#10B981', '#F43F5E', '#FBBF24', '#1D4ED8', '#06B6D4', '#F97316'];
+
+        function addCustomLeaf() {
+            const input = document.getElementById('leaf-input');
+            const text = input.value.trim();
+            if(text.length > 0) {
+                const color = leafColors[Math.floor(Math.random() * leafColors.length)];
+                
+                userLeaves.push({ text: text, color: color });
+                localStorage.setItem(TREE_STORAGE_KEY, JSON.stringify(userLeaves));
+                
+                const canopy = document.getElementById('tree-canopy');
+                createLeafElement(text, color, canopy);
+                
+                input.value = '';
+                playSFX(700 + (Math.random()*300), 'triangle', 0.1);
+            }
+        }
+
+        function requestResetTree() {
+            showConfirmModal(
+                "¿Deseas reiniciar el árbol?",
+                "Esta acción eliminará los mensajes guardados en este dispositivo y comenzarás de nuevo. (Se conservarán los mensajes de ejemplo).",
+                () => {
+                    localStorage.removeItem(TREE_STORAGE_KEY);
+                    userLeaves = [];
+                    renderTree();
+                    showModal("¡Árbol reiniciado!", "Nuestro árbol está listo para recibir nuevos mensajes de esperanza.", "fas fa-leaf", "text-vibrant-green");
+                }
+            );
+        }
+
+        document.getElementById('leaf-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                addCustomLeaf();
+            }
+        });
+
+        // --- FRASCO DE LOS ABRAZOS (LOCALSTORAGE) ---
+        const FRASCO_STORAGE_KEY = 'mural_panama_oeste_frasco';
+        let userFrascoMessages = [];
+
+        function initFrasco() {
+            const saved = localStorage.getItem(FRASCO_STORAGE_KEY);
+            if(saved) {
+                try { 
+                    userFrascoMessages = JSON.parse(saved); 
+                } catch(e) { 
+                    userFrascoMessages = []; 
+                }
+            }
+            renderFrasco();
+        }
+
+        function renderFrasco() {
+            const container = document.getElementById('frasco-mensajes');
+            container.innerHTML = '';
+            
+            if(userFrascoMessages.length === 0) {
+                container.innerHTML = '<div class="col-span-full text-center p-8"><p class="text-gray-500 font-bold text-xl italic"><i class="fas fa-heart text-pink-300 mr-2"></i> Aún no hay mensajes. ¡Escribe el primero para tu familia!</p></div>';
+                return;
+            }
+            
+            userFrascoMessages.forEach((msg, index) => {
+                const div = document.createElement('div');
+                div.className = 'bg-white p-6 rounded-2xl shadow-sm border-l-8 border-vibrant-coral transform hover:-translate-y-1 transition-transform relative text-left h-full';
+                div.innerHTML = `
+                    <p class="font-bold text-gray-700 text-lg pr-6">"${msg.text}"</p>
+                    <button onclick="deleteFrascoMessage(${index})" class="absolute top-3 right-3 text-gray-300 hover:text-vibrant-coral focus:outline-none transition-colors" aria-label="Borrar mensaje" title="Borrar mensaje">
+                        <i class="fas fa-times-circle text-xl"></i>
+                    </button>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function saveFrascoMessage() {
+            const prefix = document.getElementById('frasco-prefix').value;
+            const inputElement = document.getElementById('frasco-input');
+            const input = inputElement.value.trim();
+            
+            if(input.length > 0) {
+                const fullMessage = `${prefix} ${input}`;
+                userFrascoMessages.push({ text: fullMessage });
+                localStorage.setItem(FRASCO_STORAGE_KEY, JSON.stringify(userFrascoMessages));
+                
+                renderFrasco();
+                inputElement.value = '';
+                playSFX(700, 'triangle', 0.15);
+            } else {
+                playSFX(300, 'square', 0.1);
+            }
+        }
+
+        function deleteFrascoMessage(index) {
+            userFrascoMessages.splice(index, 1);
+            localStorage.setItem(FRASCO_STORAGE_KEY, JSON.stringify(userFrascoMessages));
+            renderFrasco();
+            playSFX(400, 'sine', 0.1);
+        }
+
+        function clearAllFrasco() {
+            if(userFrascoMessages.length === 0) return;
+            showConfirmModal(
+                "¿Deseas borrar tus mensajes familiares?",
+                "Esta acción eliminará todos los mensajes del frasco guardados en este dispositivo.",
+                () => {
+                    localStorage.removeItem(FRASCO_STORAGE_KEY);
+                    userFrascoMessages = [];
+                    renderFrasco();
+                    showModal("Mensajes borrados", "Tu frasco de gratitud está listo para nuevos mensajes.", "fas fa-trash-alt", "text-vibrant-coral");
+                }
+            );
+        }
+
+        document.getElementById('frasco-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                saveFrascoMessage();
+            }
+        });
+
+        // --- GESTIÓN DE LA IMAGEN DEL CUENTO ---
+        function handleStoryImgError() {
+            const img = document.getElementById('story-img');
+            const svgFallback = document.getElementById('story-svg-fallback');
+            
+            // Intento alternativo con nombre estandarizado para GitHub Pages
+            if (img && !img.dataset.triedAlternative) {
+                img.dataset.triedAlternative = "true";
+                img.src = "ilustracion-sismo-aula.jpg";
+                return;
+            }
+
+            // Si ambos fallan, mostrar fallback SVG
+            if (img && svgFallback) {
+                img.classList.add('hidden');
+                svgFallback.classList.remove('hidden');
+            }
+        }
+
+        function loadUserImage(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = document.getElementById('story-img');
+                    const svgFallback = document.getElementById('story-svg-fallback');
+                    const lightboxImg = document.getElementById('lightbox-img');
+                    
+                    img.src = e.target.result;
+                    if(lightboxImg) lightboxImg.src = e.target.result;
+                    
+                    img.classList.remove('hidden');
+                    if(svgFallback) svgFallback.classList.add('hidden');
+                    
+                    showModal('¡Imagen Actualizada!', 'Tu ilustración ha sido cargada correctamente en el cuento.', 'fas fa-image', 'text-vibrant-green');
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // --- BOTÓN VOLVER ARRIBA Y EVENTOS DE SCROLL ---
+        window.addEventListener('scroll', () => {
+            const scrollBtn = document.getElementById('scroll-top-btn');
+            if (window.scrollY > 400) {
+                scrollBtn.classList.remove('opacity-0', 'pointer-events-none');
+                scrollBtn.classList.add('opacity-100');
+            } else {
+                scrollBtn.classList.add('opacity-0', 'pointer-events-none');
+                scrollBtn.classList.remove('opacity-100');
+            }
+        });
+
+        // --- INICIALIZACIÓN GENERAL ---
+        window.onload = () => {
+            initTree();
+            initFrasco();
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.onvoiceschanged = () => {
+                    getBestSpanishVoice();
+                };
+            }
+        };
+    </script>
+</body>
+</html>
