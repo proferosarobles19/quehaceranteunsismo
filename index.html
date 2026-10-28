@@ -391,8 +391,8 @@
                 <span class="text-vibrant-yellow">MÁS FUERTES, MÁS UNIDOS, MÁS EMPÁTICOS</span>
             </h1>
             
-            <h2 class="text-xl sm:text-2xl md:text-4xl text-white font-bold mb-10 drop-shadow-lg max-w-4xl leading-snug">
-                Aprendimos a prepararnos. Hoy aprendemos qué hacer <span class="text-vibrant-yellow underline decoration-wavy decoration-2">durante</span> y <span class="text-vibrant-yellow underline decoration-wavy decoration-2">después</span> de un sismo, cuidándonos y sanando juntos.
+            <h2 class="text-xl sm:text-2xl md:text-4xl text-white font-bold mb-10 drop-shadow-xl max-w-4xl leading-snug">
+                Aprendimos a prepararnos. Hoy aprendemos qué hacer <span class="bg-vibrant-yellow/20 text-vibrant-yellow px-3 py-1 rounded-2xl shadow-md border-2 border-vibrant-yellow/40 backdrop-blur-sm inline-block">durante</span> y <span class="bg-vibrant-yellow/20 text-vibrant-yellow px-3 py-1 rounded-2xl shadow-md border-2 border-vibrant-yellow/40 backdrop-blur-sm inline-block">después</span> de un sismo, cuidándonos y sanando juntos.
             </h2>
 
             <!-- Botones de Acción de Portada -->
@@ -1092,14 +1092,79 @@
         <!-- MÓDULO 6: CUENTO INTERACTIVO Y EMOTIVO CON LA ILUSTRACIÓN REAL -->
         <section id="cuento" class="max-w-7xl mx-auto px-6 scroll-mt-24">
             <div class="bg-white rounded-[3rem] p-8 md:p-16 shadow-3d-card border-t-8 border-vibrant-blue">
+                
+                <!-- Reproductor Multimedia de Cabecera: Video Educativo de Calma por Profa. Karen Valdivieso -->
+                <div class="mb-14 max-w-3xl mx-auto bg-gradient-to-b from-pink-50 via-purple-50 to-sky-50 p-6 md:p-10 rounded-[3rem] border-8 border-vibrant-cyan shadow-3d-card text-center relative overflow-hidden">
+                    <div class="flex items-center justify-center gap-3 mb-2 text-vibrant-coral font-black text-2xl md:text-3xl">
+                        <span class="w-14 h-14 rounded-2xl bg-vibrant-yellow text-vibrant-dark flex items-center justify-center text-3xl shadow-md border-2 border-white icon-3d flex-shrink-0">
+                            <i class="fas fa-video text-vibrant-coral"></i>
+                        </span>
+                        <span>Video Educativo: ¡Calma para Ti!</span>
+                    </div>
+                    
+                    <!-- Crédito Oficial de Autoría -->
+                    <div class="inline-flex items-center gap-2 bg-white/90 text-vibrant-blue font-black text-sm md:text-base px-5 py-1.5 rounded-full shadow-sm border border-blue-200 mb-4">
+                        <i class="fas fa-chalkboard-user text-vibrant-orange"></i>
+                        <span>Realizado con amor por: Profa. Karen Valdivieso</span>
+                    </div>
+
+                    <p class="text-gray-700 font-extrabold text-base md:text-lg mb-6 max-w-xl mx-auto leading-relaxed">
+                        Un hermoso recurso educativo animado preparado especialmente para que los niños aprendan a respirar, relajarse y encontrar serenidad en momentos difíciles.
+                    </p>
+
+                    <!-- Marco de Video Animado 3D Hermoso para Niños -->
+                    <div class="relative w-full max-w-2xl mx-auto rounded-3xl overflow-hidden shadow-2xl border-4 border-white bg-slate-900 group mb-6">
+                        <video id="video-calma" controls playsinline preload="metadata" class="w-full h-auto max-h-[420px] object-cover block mx-auto rounded-2xl">
+                            <source src="calmabykarenvaldivieso.mp4" type="video/mp4">
+                            Tu navegador no soporta la reproducción de video HTML5.
+                        </video>
+                        <!-- Insignia Flotante Animada -->
+                        <div class="absolute top-3 left-3 bg-white/90 backdrop-blur-md px-3.5 py-1.5 rounded-full text-xs font-black text-vibrant-coral border border-pink-200 shadow-md flex items-center gap-1.5 pointer-events-none">
+                            <i class="fas fa-sparkles text-vibrant-yellow"></i> Profa. Karen Valdivieso
+                        </div>
+                    </div>
+
+                    <!-- Botones Coloridos y Bonitos 3D de Ver y Pausar -->
+                    <div class="flex flex-wrap items-center justify-center gap-4 mb-4">
+                        <!-- Botón Reproducir Video (Verde Esmeralda Brillante 3D) -->
+                        <button onclick="playCalmaVideo()" id="btn-video-play" class="btn-3d bg-gradient-to-r from-emerald-400 to-vibrant-green hover:from-emerald-500 hover:to-green-600 text-white font-black py-4 px-8 rounded-2xl text-xl shadow-lg border-4 border-white inline-flex items-center gap-3 focus:outline-none focus:ring-4 focus:ring-green-300">
+                            <span class="w-8 h-8 rounded-full bg-white text-vibrant-green flex items-center justify-center shadow-inner text-base">
+                                <i class="fas fa-play ml-0.5"></i>
+                            </span>
+                            <span>¡Ver Video!</span>
+                        </button>
+
+                        <!-- Botón Pausar (Rosa Coral Encantador 3D) -->
+                        <button onclick="pauseCalmaVideo()" id="btn-video-pause" class="btn-3d bg-gradient-to-r from-rose-400 to-vibrant-coral hover:from-rose-500 hover:to-pink-600 text-white font-black py-4 px-8 rounded-2xl text-xl shadow-lg border-4 border-white inline-flex items-center gap-3 focus:outline-none focus:ring-4 focus:ring-rose-300">
+                            <span class="w-8 h-8 rounded-full bg-white text-vibrant-coral flex items-center justify-center shadow-inner text-base">
+                                <i class="fas fa-pause"></i>
+                            </span>
+                            <span>Pausar</span>
+                        </button>
+
+                        <!-- Botón Reiniciar (Amarillo Sol 3D) -->
+                        <button onclick="restartCalmaVideo()" id="btn-video-restart" class="btn-3d bg-gradient-to-r from-amber-300 to-vibrant-yellow hover:from-amber-400 hover:to-yellow-500 text-vibrant-dark font-black py-4 px-6 rounded-2xl text-lg shadow-lg border-4 border-white inline-flex items-center gap-2 focus:outline-none focus:ring-4 focus:ring-yellow-300" title="Volver al inicio del video">
+                            <i class="fas fa-arrow-rotate-left"></i>
+                            <span>Repetir</span>
+                        </button>
+                    </div>
+
+                    <div class="mt-4 flex items-center justify-center gap-4 text-xs sm:text-sm font-bold text-gray-600">
+                        <a href="calmabykarenvaldivieso.mp4" download="calmabykarenvaldivieso.mp4" class="hover:text-vibrant-blue transition-colors flex items-center gap-1.5 bg-white px-5 py-2.5 rounded-full border border-gray-200 shadow-sm">
+                            <i class="fas fa-download text-vibrant-green text-base"></i> Descargar Video Educativo (MP4)
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Encabezado del Cuento: El día que la tierra se movió -->
                 <div class="text-center mb-10">
                     <i class="fas fa-book-open text-6xl md:text-7xl text-vibrant-blue mb-4 icon-3d"></i>
                     <h2 class="text-3xl md:text-5xl font-black text-vibrant-dark mb-4">El día que la tierra se movió y nuestros corazones se unieron</h2>
                     <p class="text-xl md:text-2xl font-bold text-gray-600 max-w-3xl mx-auto mb-6">
-                        Una historia inspirada en el valor de los niños, docentes y familias de Panamá Oeste.
+                        Una historia que nos enseña cómo la valentía, el amor de nuestros maestros y la unión familiar nos mantienen a salvo y en calma.
                     </p>
                     
-                    <div class="flex flex-wrap justify-center gap-4 mt-4">
+                    <div class="flex flex-wrap justify-center items-center gap-4 mt-4">
                         <button onclick="playCuento()" class="btn-3d bg-vibrant-green hover:bg-green-500 text-white font-black py-3 px-8 rounded-full text-xl shadow-3d-btn border-2 border-white flex items-center focus:outline-none focus:ring-4 focus:ring-vibrant-yellow">
                             <i class="fas fa-play mr-3"></i> Leer Conmigo
                         </button>
@@ -1152,20 +1217,15 @@
                             </div>
                         </div>
 
-                        <!-- Pie descriptivo y botón de ampliación -->
-                        <div class="bg-vibrant-dark/95 backdrop-blur-sm px-4 py-3 text-center border-t-2 border-vibrant-yellow/40 flex flex-col gap-2">
-                            <p class="text-xs md:text-sm font-black text-vibrant-yellow tracking-wide uppercase">
-                                <i class="fas fa-shield-heart text-vibrant-coral mr-1.5"></i> Protocolo en acción: Agacharse, cubrirse y agarrarse en el aula
-                            </p>
-                            <div class="flex items-center justify-center gap-2 pt-1 text-xs">
-                                <button onclick="openImageLightbox()" class="bg-white/20 hover:bg-white/30 text-white font-bold px-3 py-1 rounded-full text-xs transition-colors border border-white/30 inline-flex items-center gap-1.5">
-                                    <i class="fas fa-expand"></i> Ver ilustración completa
-                                </button>
-                                <label for="img-file-input" class="cursor-pointer bg-white/20 hover:bg-white/30 text-white font-bold px-3 py-1 rounded-full text-xs transition-colors border border-white/30 inline-flex items-center gap-1">
-                                    <i class="fas fa-folder-open"></i> Cambiar imagen
-                                </label>
-                                <input type="file" id="img-file-input" accept="image/*" class="hidden" onchange="loadUserImage(event)">
-                            </div>
+                        <!-- Barra de controles de la imagen -->
+                        <div class="bg-vibrant-dark/95 backdrop-blur-sm px-4 py-2.5 text-center border-t-2 border-vibrant-yellow/40 flex items-center justify-center gap-2 text-xs">
+                            <button onclick="openImageLightbox()" class="bg-white/20 hover:bg-white/30 text-white font-bold px-3.5 py-1.5 rounded-full text-xs transition-colors border border-white/30 inline-flex items-center gap-1.5">
+                                <i class="fas fa-expand text-vibrant-yellow"></i> Ver ilustración completa
+                            </button>
+                            <label for="img-file-input" class="cursor-pointer bg-white/20 hover:bg-white/30 text-white font-bold px-3.5 py-1.5 rounded-full text-xs transition-colors border border-white/30 inline-flex items-center gap-1.5">
+                                <i class="fas fa-folder-open text-vibrant-cyan"></i> Cambiar imagen
+                            </label>
+                            <input type="file" id="img-file-input" accept="image/*" class="hidden" onchange="loadUserImage(event)">
                         </div>
                     </div>
 
@@ -1657,15 +1717,25 @@
         function getBestSpanishVoice() {
             if (!synth) return null;
             const voices = synth.getVoices();
-            return voices.find(v => v.lang === 'es-PA') ||
-                   voices.find(v => v.lang === 'es-419') ||
-                   voices.find(v => v.lang.startsWith('es-MX')) ||
-                   voices.find(v => v.lang.startsWith('es-US')) ||
-                   voices.find(v => v.lang.startsWith('es-')) ||
-                   voices.find(v => v.lang.includes('Spanish')) || null;
+            // Priorizar voces femeninas cálidas, angelicales y suaves
+            const angelicalFemaleKeywords = ['sabina', 'monica', 'zira', 'helena', 'lucia', 'laura', 'sofia', 'paulina', 'female', 'mujer', 'natural', 'online'];
+            
+            // 1. Buscar voz femenina en español
+            const spanishVoices = voices.filter(v => v.lang.startsWith('es') || v.lang.includes('Spanish'));
+            const angelicalVoice = spanishVoices.find(v => 
+                angelicalFemaleKeywords.some(keyword => v.name.toLowerCase().includes(keyword))
+            );
+            if (angelicalVoice) return angelicalVoice;
+
+            // 2. Si no hay nombre específico, buscar dialectos en español latinoamericano
+            return spanishVoices.find(v => v.lang === 'es-PA') ||
+                   spanishVoices.find(v => v.lang === 'es-419') ||
+                   spanishVoices.find(v => v.lang.startsWith('es-MX')) ||
+                   spanishVoices.find(v => v.lang.startsWith('es-US')) ||
+                   spanishVoices[0] || null;
         }
 
-        function speak(text, callback) {
+        function speak(text, callback, isAngelical = false) {
             if(isMuted) return;
             initAudio();
             stopAudio();
@@ -1678,14 +1748,55 @@
             } else {
                 utterance.lang = 'es-PA';
             }
-            utterance.rate = 0.92;     
-            utterance.pitch = 1.05;    
+
+            if(isAngelical) {
+                // Tono angelical: modulado más dulce, melodioso, pausado y sereno
+                utterance.rate = 0.85;   // Cadencia suave y dulce
+                utterance.pitch = 1.28;  // Tono cristalino y angelical
+                utterance.volume = 1.0;
+            } else {
+                utterance.rate = 0.92;     
+                utterance.pitch = 1.08;    
+            }
             
             if(callback) {
                 utterance.onend = callback;
             }
             synth.speak(utterance);
         }
+
+        // --- CONTROLES DEL VIDEO Y CANCIÓN ANIMADA PARA NIÑOS ---
+        function playCalmaVideo() {
+            const video = document.getElementById('video-calma');
+            if(video) {
+                // Pausar cualquier síntesis de voz que esté sonando
+                stopAudio();
+                video.play();
+                playSFX(650, 'sine', 0.1);
+            }
+        }
+
+        function pauseCalmaVideo() {
+            const video = document.getElementById('video-calma');
+            if(video) {
+                video.pause();
+                playSFX(400, 'sine', 0.1);
+            }
+        }
+
+        function restartCalmaVideo() {
+            const video = document.getElementById('video-calma');
+            if(video) {
+                video.currentTime = 0;
+                video.play();
+                playSFX(800, 'sine', 0.15);
+            }
+        }
+
+        // Compatibilidad hacia atrás
+        const playAudioNino = playCalmaVideo;
+        const pauseAudioNino = pauseCalmaVideo;
+        const restartAudioNino = restartCalmaVideo;
 
         function playSFX(freq = 400, type = 'sine', duration = 0.2) {
             if(isMuted) return;
@@ -1857,11 +1968,12 @@
                 currentEl.scrollIntoView({behavior: 'smooth', block: 'center'});
             }
             
+            // Reproducir con voz angelical, cadencia dulce y tono cristalino
             speak(cuentoTextos[currentPIndex], () => {
                 if(currentEl) currentEl.classList.remove('reading-highlight');
                 currentPIndex++;
                 readNextParagraph();
-            });
+            }, true);
         }
 
         function playTribute() {
