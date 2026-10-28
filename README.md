@@ -38,11 +38,14 @@ Para que cualquier estudiante, docente o padre de familia pueda abrir este mural
    - Elige **Public** (Público) y presiona **Create repository**.
 
 2. **Subir los Archivos:**
-   - En la página de tu nuevo repositorio, haz clic en **"uploading an existing file"** (subir archivos existentes).
-   - Arrastra o selecciona los siguientes archivos de esta carpeta:
+   - En la página de tu repositorio, haz clic en **"Add file"** > **"Upload files"** (subir archivos existentes).
+   - Arrastra o selecciona los siguientes archivos clave de esta carpeta:
      - `index.html` *(archivo principal del sitio web)*
-     - `Gemini_Generated_Image_y55ffy55ffy55ffy.jpg` *(ilustración del cuento)*
-     - `ilustracion-sismo-aula.jpg` *(copia estandarizada)*
+     - `protocolos-oficiales-meduca.jpg` *(lámina de protocolos MEDUCA)*
+     - `ilustracion-sismo-aula.jpg` *(ilustración del cuento)*
+     - `Guia_de_Soporte_Emocional_Post-Sismo_Biancheri.pdf` *(Guía docente)*
+     - `Somos_Pequenos_Cuento_Sismo.pdf` *(Cuento ilustrado)*
+     - `Hojas_de_Colorear_Despues_del_Temblor_Dilsia_Morales.pdf` *(Cuadernillo de actividades)*
      - `README.md`
    - Haz clic en el botón verde **"Commit changes"**.
 

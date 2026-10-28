@@ -111,10 +111,30 @@
         ::-webkit-scrollbar-thumb { background: #2563EB; border-radius: 10px; border: 3px solid #DBEAFE; }
         ::-webkit-scrollbar-thumb:hover { background: #1D4ED8; }
 
-        /* Estilos específicos del Árbol de la Esperanza 3D */
+        /* Estilos específicos del Árbol de la Esperanza 3D y Drag & Drop */
         .leaf-shape {
             border-radius: 0 20px 0 20px; 
             cursor: pointer;
+            user-select: none;
+            touch-action: none;
+        }
+
+        .leaf-draggable {
+            cursor: grab;
+            transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s;
+        }
+
+        .leaf-draggable:active, .leaf-draggable.is-dragging {
+            cursor: grabbing;
+            transform: scale(1.15) rotate(4deg) !important;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2) !important;
+            z-index: 1000 !important;
+        }
+
+        .canopy-dropzone-active {
+            box-shadow: 0 0 0 8px #FBBF24, 0 0 45px rgba(251, 191, 36, 0.8), inset 0 0 30px rgba(255, 255, 255, 0.4) !important;
+            transform: scale(1.02);
+            transition: all 0.25s ease-out;
         }
         
         .tree-canopy-container {
@@ -190,40 +210,102 @@
 </head>
 <body class="antialiased selection:bg-vibrant-yellow selection:text-vibrant-dark">
 
-    <!-- BARRA DE NAVEGACIÓN SUPERIOR (STICKY) -->
-    <nav id="top-nav" class="sticky top-0 z-40 bg-white/95 backdrop-blur-md shadow-md border-b-4 border-vibrant-yellow transition-all duration-300">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between gap-3">
-            <a href="#inicio" class="flex items-center gap-2.5 text-vibrant-blue font-black text-lg md:text-xl tracking-tight hover:opacity-90 transition-opacity">
-                <span class="w-10 h-10 rounded-full bg-vibrant-yellow text-vibrant-dark flex items-center justify-center shadow text-lg border-2 border-white">
+    <!-- BARRA DE NAVEGACIÓN SUPERIOR (STICKY CON BOTONES 3D INTERACTIVOS Y LETRA MÁS GRANDE) -->
+    <nav id="top-nav" class="sticky top-0 z-40 bg-white/95 backdrop-blur-md shadow-lg border-b-4 border-vibrant-yellow transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-3 sm:px-6 py-3 flex items-center justify-between gap-3 md:gap-4">
+            <!-- Brand / Logo -->
+            <a href="#inicio" class="flex items-center gap-3 text-vibrant-blue font-black text-xl md:text-2xl tracking-tight hover:opacity-90 transition-opacity flex-shrink-0">
+                <span class="w-12 h-12 rounded-2xl bg-vibrant-yellow text-vibrant-dark flex items-center justify-center shadow-md text-2xl border-2 border-white icon-3d">
                     <i class="fas fa-shield-heart text-vibrant-coral"></i>
                 </span>
                 <span class="flex flex-col text-left">
                     <span class="leading-none text-vibrant-blue font-black text-base sm:text-lg">PANAMÁ OESTE</span>
-                    <span class="text-xs font-bold text-gray-500">Unidos & Preparados</span>
+                    <span class="text-xs sm:text-sm font-bold text-gray-500">Unidos & Preparados</span>
                 </span>
             </a>
 
-            <!-- Enlaces Rápidos (Desktop) -->
-            <div class="hidden xl:flex items-center gap-2 text-xs font-black uppercase tracking-wider text-gray-700">
-                <a href="#durante-sismo" class="px-3 py-1.5 rounded-full hover:bg-orange-100 hover:text-vibrant-orange transition-colors">Durante el Sismo</a>
-                <a href="#despues-sismo" class="px-3 py-1.5 rounded-full hover:bg-blue-100 hover:text-vibrant-blue transition-colors">Después del Sismo</a>
-                <a href="#punto-encuentro" class="px-3 py-1.5 rounded-full hover:bg-cyan-100 hover:text-vibrant-cyan transition-colors">Punto de Encuentro</a>
-                <a href="#mochila" class="px-3 py-1.5 rounded-full hover:bg-yellow-100 hover:text-amber-600 transition-colors">Mochila</a>
-                <a href="#emociones" class="px-3 py-1.5 rounded-full hover:bg-rose-100 hover:text-vibrant-coral transition-colors">Emociones</a>
-                <a href="#cuento" class="px-3 py-1.5 rounded-full hover:bg-emerald-100 hover:text-vibrant-green transition-colors">Cuento Ilustrado</a>
-                <a href="#arbol-esperanza" class="px-3 py-1.5 rounded-full hover:bg-green-100 hover:text-green-700 transition-colors">Árbol</a>
-                <a href="#en-familia" class="px-3 py-1.5 rounded-full hover:bg-pink-100 hover:text-pink-600 transition-colors">Familia</a>
-                <a href="#emergencias" class="px-3 py-1.5 rounded-full bg-red-100 text-red-600 hover:bg-red-200 transition-colors font-extrabold">Emergencias</a>
+            <!-- Botonera de Navegación Rápida con Estilo de Botón 3D y Tipografía Grande -->
+            <div class="hidden xl:flex items-center gap-2 overflow-x-auto py-1">
+                <a href="#durante-sismo" class="btn-3d bg-orange-50 hover:bg-vibrant-orange hover:text-white text-vibrant-orange border-2 border-orange-200 hover:border-vibrant-orange px-3.5 py-2 rounded-2xl font-black text-sm md:text-base transition-all flex items-center gap-2 shadow-sm">
+                    <i class="fas fa-hand text-base"></i>
+                    <span>Durante</span>
+                </a>
+                <a href="#despues-sismo" class="btn-3d bg-blue-50 hover:bg-vibrant-blue hover:text-white text-vibrant-blue border-2 border-blue-200 hover:border-vibrant-blue px-3.5 py-2 rounded-2xl font-black text-sm md:text-base transition-all flex items-center gap-2 shadow-sm">
+                    <i class="fas fa-person-walking text-base"></i>
+                    <span>Después</span>
+                </a>
+                <a href="#soporte-emocional" class="btn-3d bg-cyan-50 hover:bg-vibrant-cyan hover:text-white text-vibrant-cyan border-2 border-cyan-200 hover:border-vibrant-cyan px-3.5 py-2 rounded-2xl font-black text-sm md:text-base transition-all flex items-center gap-2 shadow-sm">
+                    <i class="fas fa-file-pdf text-base"></i>
+                    <span>Guía y PDFs</span>
+                </a>
+                <a href="#mochila" class="btn-3d bg-yellow-50 hover:bg-amber-500 hover:text-white text-amber-600 border-2 border-yellow-200 hover:border-amber-500 px-3.5 py-2 rounded-2xl font-black text-sm md:text-base transition-all flex items-center gap-2 shadow-sm">
+                    <i class="fas fa-backpack text-base"></i>
+                    <span>Mochila</span>
+                </a>
+                <a href="#emociones" class="btn-3d bg-rose-50 hover:bg-vibrant-coral hover:text-white text-vibrant-coral border-2 border-rose-200 hover:border-vibrant-coral px-3.5 py-2 rounded-2xl font-black text-sm md:text-base transition-all flex items-center gap-2 shadow-sm">
+                    <i class="fas fa-face-smile text-base"></i>
+                    <span>Emociones</span>
+                </a>
+                <a href="#cuento" class="btn-3d bg-emerald-50 hover:bg-vibrant-green hover:text-white text-vibrant-green border-2 border-emerald-200 hover:border-vibrant-green px-3.5 py-2 rounded-2xl font-black text-sm md:text-base transition-all flex items-center gap-2 shadow-sm">
+                    <i class="fas fa-book text-base"></i>
+                    <span>Cuento</span>
+                </a>
+                <a href="#arbol-esperanza" class="btn-3d bg-green-50 hover:bg-green-600 hover:text-white text-green-700 border-2 border-green-200 hover:border-green-600 px-3.5 py-2 rounded-2xl font-black text-sm md:text-base transition-all flex items-center gap-2 shadow-sm">
+                    <i class="fas fa-tree text-base"></i>
+                    <span>Mural</span>
+                </a>
+                <a href="#en-familia" class="btn-3d bg-pink-50 hover:bg-pink-500 hover:text-white text-pink-600 border-2 border-pink-200 hover:border-pink-500 px-3.5 py-2 rounded-2xl font-black text-sm md:text-base transition-all flex items-center gap-2 shadow-sm">
+                    <i class="fas fa-house-heart text-base"></i>
+                    <span>Familia</span>
+                </a>
             </div>
 
-            <!-- Controles Rápidos de Sonido & Ayuda -->
-            <div class="flex items-center gap-2">
-                <button onclick="toggleMute()" id="nav-mute-btn" class="px-3 py-2 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs font-black flex items-center gap-2 border border-gray-300 transition-all focus:outline-none focus:ring-2 focus:ring-vibrant-yellow shadow-sm" title="Activar/Silenciar Narración y Efectos">
-                    <i class="fas fa-volume-mute text-gray-500" id="nav-mute-icon"></i>
-                    <span id="nav-mute-text" class="hidden md:inline">Sonido silenciado</span>
+            <!-- Controles de Audio, Emergencia y Menú Móvil -->
+            <div class="flex items-center gap-2.5">
+                <!-- Botón de Audio Interactivo -->
+                <button onclick="toggleMute()" id="nav-mute-btn" class="btn-3d px-3.5 py-2 rounded-2xl bg-gray-100 hover:bg-gray-200 text-gray-700 text-sm md:text-base font-black flex items-center gap-2 border border-gray-300 transition-all focus:outline-none focus:ring-2 focus:ring-vibrant-yellow shadow-sm" title="Activar/Silenciar Narración y Efectos">
+                    <i class="fas fa-volume-mute text-gray-500 text-base" id="nav-mute-icon"></i>
+                    <span id="nav-mute-text" class="hidden sm:inline">Sonido</span>
                 </button>
-                <a href="#emergencias" class="text-xs font-black bg-vibrant-coral hover:bg-rose-600 text-white px-3.5 py-2 rounded-full shadow flex items-center gap-1.5 transition-colors">
+
+                <!-- Botón de Emergencias 911 3D -->
+                <a href="#emergencias" class="btn-3d text-sm md:text-base font-black bg-vibrant-coral hover:bg-rose-600 text-white px-4 py-2 rounded-2xl shadow border-2 border-white flex items-center gap-2 transition-transform">
                     <i class="fas fa-phone-volume animate-pulse"></i> <span>911</span>
+                </a>
+
+                <!-- Botón Desplegable para Móviles / Tablets -->
+                <button onclick="document.getElementById('mobile-menu').classList.toggle('hidden')" class="xl:hidden p-2.5 rounded-2xl bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold border border-gray-300 focus:outline-none focus:ring-2 focus:ring-vibrant-blue text-lg" aria-label="Abrir Menú de Navegación">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Menú Móvil Desplegable -->
+        <div id="mobile-menu" class="hidden xl:hidden bg-white border-t-2 border-yellow-200 px-4 py-3 shadow-inner">
+            <div class="grid grid-cols-2 gap-2.5 text-sm md:text-base font-black">
+                <a href="#durante-sismo" onclick="document.getElementById('mobile-menu').classList.add('hidden')" class="p-3 rounded-2xl bg-orange-50 text-vibrant-orange border border-orange-200 flex items-center gap-2">
+                    <i class="fas fa-hand text-base"></i> Durante
+                </a>
+                <a href="#despues-sismo" onclick="document.getElementById('mobile-menu').classList.add('hidden')" class="p-3 rounded-2xl bg-blue-50 text-vibrant-blue border border-blue-200 flex items-center gap-2">
+                    <i class="fas fa-person-walking text-base"></i> Después
+                </a>
+                <a href="#soporte-emocional" onclick="document.getElementById('mobile-menu').classList.add('hidden')" class="p-3 rounded-2xl bg-cyan-50 text-vibrant-cyan border border-cyan-200 flex items-center gap-2">
+                    <i class="fas fa-file-pdf text-base"></i> Guía y PDFs
+                </a>
+                <a href="#mochila" onclick="document.getElementById('mobile-menu').classList.add('hidden')" class="p-3 rounded-2xl bg-yellow-50 text-amber-600 border border-yellow-200 flex items-center gap-2">
+                    <i class="fas fa-backpack text-base"></i> Mochila
+                </a>
+                <a href="#emociones" onclick="document.getElementById('mobile-menu').classList.add('hidden')" class="p-3 rounded-2xl bg-rose-50 text-vibrant-coral border border-rose-200 flex items-center gap-2">
+                    <i class="fas fa-face-smile text-base"></i> Emociones
+                </a>
+                <a href="#cuento" onclick="document.getElementById('mobile-menu').classList.add('hidden')" class="p-3 rounded-2xl bg-emerald-50 text-vibrant-green border border-emerald-200 flex items-center gap-2">
+                    <i class="fas fa-book text-base"></i> Cuento
+                </a>
+                <a href="#arbol-esperanza" onclick="document.getElementById('mobile-menu').classList.add('hidden')" class="p-3 rounded-2xl bg-green-50 text-green-700 border border-green-200 flex items-center gap-2">
+                    <i class="fas fa-tree text-base"></i> Mural
+                </a>
+                <a href="#en-familia" onclick="document.getElementById('mobile-menu').classList.add('hidden')" class="p-3 rounded-2xl bg-pink-50 text-pink-600 border border-pink-200 flex items-center gap-2">
+                    <i class="fas fa-house-heart text-base"></i> Familia
                 </a>
             </div>
         </div>
@@ -300,12 +382,6 @@
         </div>
 
         <div class="relative z-10 text-center max-w-6xl mx-auto flex flex-col items-center">
-            
-            <!-- Contexto Histórico Oficial del Sismo del 9 de Octubre -->
-            <div class="inline-flex items-center gap-2 bg-white/20 backdrop-blur-md text-white border-2 border-white/40 px-5 py-2 rounded-full font-black text-xs md:text-sm uppercase tracking-wider mb-4 shadow">
-                <i class="fas fa-bullhorn text-vibrant-yellow"></i> Ante el sismo del pasado 09 de octubre en Panamá Oeste
-            </div>
-
             <div class="inline-block bg-vibrant-yellow text-vibrant-dark font-black px-8 py-3 rounded-full uppercase tracking-widest mb-6 shadow-xl text-xl md:text-2xl transform -rotate-2 border-4 border-white animate-pulse-ring">
                 ¡Somos Pequeños Grandes Valientes!
             </div>
@@ -418,6 +494,182 @@
                 </div>
             </div>
 
+            <!-- Panel Oficial MEDUCA: Reestructuración 3D de PROTOCOLOS A SEGUIR -->
+            <div class="bg-white rounded-[3rem] p-6 sm:p-10 border-8 border-vibrant-blue shadow-3d-card mb-16 relative overflow-hidden">
+                <!-- Cinta de Encabezado Institucional 3D -->
+                <div class="flex flex-col md:flex-row items-center justify-between gap-4 border-b-4 border-blue-100 pb-6 mb-8 text-center md:text-left">
+                    <div class="flex items-center gap-4">
+                        <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500 to-vibrant-blue text-white flex items-center justify-center text-3xl shadow-lg border-2 border-white icon-3d flex-shrink-0">
+                            <i class="fas fa-shield-halved"></i>
+                        </div>
+                        <div>
+                            <span class="text-xs font-black tracking-widest text-vibrant-blue uppercase bg-blue-100 px-3 py-1 rounded-full inline-block mb-1">
+                                MEDUCA • Dirección Nacional de Educación Ambiental
+                            </span>
+                            <h3 class="text-2xl sm:text-3xl font-black text-vibrant-dark">
+                                Protocolo Oficial de Protección ante Sismos y Eventos Naturales
+                            </h3>
+                        </div>
+                    </div>
+                    <button onclick="document.getElementById('modal-protocolo-img').classList.remove('hidden')" class="btn-3d bg-vibrant-yellow hover:bg-yellow-400 text-vibrant-dark font-black py-3 px-5 rounded-2xl text-sm border-2 border-white shadow-md inline-flex items-center gap-2 flex-shrink-0">
+                        <i class="fas fa-magnifying-glass-plus text-lg"></i>
+                        <span>Ver Lámina Original</span>
+                    </button>
+                </div>
+
+                <!-- Tarjetas 3D Ilustradas de Protocolos Oficiales -->
+                <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+                    <!-- Tarjeta 1: Protección en Salón de Clases -->
+                    <div class="card-3d bg-gradient-to-b from-blue-50 to-white p-6 rounded-3xl border-4 border-blue-200 shadow-md flex flex-col justify-between hover:border-vibrant-blue transition-all">
+                        <div>
+                            <div class="w-14 h-14 rounded-2xl bg-vibrant-blue text-white flex items-center justify-center text-2xl mb-4 shadow border-2 border-white icon-3d">
+                                <i class="fas fa-house-chimney-user"></i>
+                            </div>
+                            <span class="text-xs font-black text-vibrant-blue uppercase tracking-wider">Regla Escolar #1</span>
+                            <h4 class="text-xl font-black text-vibrant-dark mt-1 mb-2">Protéjase en Lugar Seguro</h4>
+                            <p class="text-sm font-bold text-gray-700 leading-relaxed mb-3">
+                                No envíes a los estudiantes a sus hogares durante el sismo. Permanezcan bajo cubierta firme hasta que el movimiento cese y el docente o directivo lo indique.
+                            </p>
+                        </div>
+                        <div class="bg-blue-100/70 p-3 rounded-xl text-xs font-bold text-blue-900 flex items-center gap-2">
+                            <i class="fas fa-check-circle text-vibrant-blue"></i>
+                            <span>Evitar salida apresurada a la calle</span>
+                        </div>
+                    </div>
+
+                    <!-- Tarjeta 2: Brigadas y Rutas de Evacuación -->
+                    <div class="card-3d bg-gradient-to-b from-orange-50 to-white p-6 rounded-3xl border-4 border-orange-200 shadow-md flex flex-col justify-between hover:border-vibrant-orange transition-all">
+                        <div>
+                            <div class="w-14 h-14 rounded-2xl bg-vibrant-orange text-white flex items-center justify-center text-2xl mb-4 shadow border-2 border-white icon-3d">
+                                <i class="fas fa-people-roof"></i>
+                            </div>
+                            <span class="text-xs font-black text-vibrant-orange uppercase tracking-wider">Acción de Brigadas</span>
+                            <h4 class="text-xl font-black text-vibrant-dark mt-1 mb-2">Rutas Despejadas y Manos Abajo</h4>
+                            <p class="text-sm font-bold text-gray-700 leading-relaxed mb-3">
+                                Las brigadas de seguridad revisan que las salidas estén libres de obstáculos. La evacuación se realiza de manera ordenada, en fila y en posición normal sin correr.
+                            </p>
+                        </div>
+                        <div class="bg-orange-100/70 p-3 rounded-xl text-xs font-bold text-orange-900 flex items-center gap-2">
+                            <i class="fas fa-person-walking text-vibrant-orange"></i>
+                            <span>No llevar artículos personales</span>
+                        </div>
+                    </div>
+
+                    <!-- Tarjeta 3: Zona Segura y Primeros Auxilios -->
+                    <div class="card-3d bg-gradient-to-b from-green-50 to-white p-6 rounded-3xl border-4 border-green-200 shadow-md flex flex-col justify-between hover:border-vibrant-green transition-all">
+                        <div>
+                            <div class="w-14 h-14 rounded-2xl bg-vibrant-green text-white flex items-center justify-center text-2xl mb-4 shadow border-2 border-white icon-3d">
+                                <i class="fas fa-kit-medical"></i>
+                            </div>
+                            <span class="text-xs font-black text-vibrant-green uppercase tracking-wider">Punto de Acopio</span>
+                            <h4 class="text-xl font-black text-vibrant-dark mt-1 mb-2">Separar Primeros Auxilios</h4>
+                            <p class="text-sm font-bold text-gray-700 leading-relaxed mb-3">
+                                En la Zona Segura se separa el área de Primeros Auxilios para atender con calma a quien lo necesite, sin generar tumultos ni aglomeraciones.
+                            </p>
+                        </div>
+                        <div class="bg-green-100/70 p-3 rounded-xl text-xs font-bold text-green-900 flex items-center gap-2">
+                            <i class="fas fa-heart-pulse text-vibrant-green"></i>
+                            <span>Atención médica inmediata</span>
+                        </div>
+                    </div>
+
+                    <!-- Tarjeta 4: Apoyo a Discapacidad e Inclusión -->
+                    <div class="card-3d bg-gradient-to-b from-purple-50 to-white p-6 rounded-3xl border-4 border-purple-200 shadow-md flex flex-col justify-between hover:border-purple-500 transition-all">
+                        <div>
+                            <div class="w-14 h-14 rounded-2xl bg-purple-600 text-white flex items-center justify-center text-2xl mb-4 shadow border-2 border-white icon-3d">
+                                <i class="fas fa-wheelchair"></i>
+                            </div>
+                            <span class="text-xs font-black text-purple-600 uppercase tracking-wider">Inclusión Escolar</span>
+                            <h4 class="text-xl font-black text-vibrant-dark mt-1 mb-2">Acompañamiento Especial</h4>
+                            <p class="text-sm font-bold text-gray-700 leading-relaxed mb-3">
+                                Ayudar de forma prioritaria a los compañeros con discapacidad o a quienes muestren dificultad para caminar, asignando tutores de apoyo designados.
+                            </p>
+                        </div>
+                        <div class="bg-purple-100/70 p-3 rounded-xl text-xs font-bold text-purple-900 flex items-center gap-2">
+                            <i class="fas fa-hands-holding text-purple-600"></i>
+                            <span>Cuidado solidario para todos</span>
+                        </div>
+                    </div>
+
+                    <!-- Tarjeta 5: Soporte y Contención Emocional -->
+                    <div class="card-3d bg-gradient-to-b from-rose-50 to-white p-6 rounded-3xl border-4 border-rose-200 shadow-md flex flex-col justify-between hover:border-vibrant-coral transition-all">
+                        <div>
+                            <div class="w-14 h-14 rounded-2xl bg-vibrant-coral text-white flex items-center justify-center text-2xl mb-4 shadow border-2 border-white icon-3d">
+                                <i class="fas fa-hand-holding-heart"></i>
+                            </div>
+                            <span class="text-xs font-black text-vibrant-coral uppercase tracking-wider">Salud Mental</span>
+                            <h4 class="text-xl font-black text-vibrant-dark mt-1 mb-2">Brigada de Apoyo Emocional</h4>
+                            <p class="text-sm font-bold text-gray-700 leading-relaxed mb-3">
+                                En el área segura, se activa el soporte emocional: círculos de contención agarrados de las manos, respiración profunda y validación sin forzar a hablar.
+                            </p>
+                        </div>
+                        <div class="bg-rose-100/70 p-3 rounded-xl text-xs font-bold text-rose-900 flex items-center gap-2">
+                            <i class="fas fa-face-smile text-vibrant-coral"></i>
+                            <span>Calma y escucha afectiva</span>
+                        </div>
+                    </div>
+
+                    <!-- Tarjeta 6: Inspección Técnica y Retorno Seguro -->
+                    <div class="card-3d bg-gradient-to-b from-yellow-50 to-white p-6 rounded-3xl border-4 border-yellow-200 shadow-md flex flex-col justify-between hover:border-yellow-400 transition-all">
+                        <div>
+                            <div class="w-14 h-14 rounded-2xl bg-amber-500 text-white flex items-center justify-center text-2xl mb-4 shadow border-2 border-white icon-3d">
+                                <i class="fas fa-clipboard-check"></i>
+                            </div>
+                            <span class="text-xs font-black text-amber-700 uppercase tracking-wider">Autorización Oficial</span>
+                            <h4 class="text-xl font-black text-vibrant-dark mt-1 mb-2">Inspección de Estructura</h4>
+                            <p class="text-sm font-bold text-gray-700 leading-relaxed mb-3">
+                                Nadie regresa a las aulas hasta que el personal técnico o SINAPROC verifique daños. La Dirección Escolar informa formalmente la reanudación de clases.
+                            </p>
+                        </div>
+                        <div class="bg-yellow-100/70 p-3 rounded-xl text-xs font-bold text-yellow-900 flex items-center gap-2">
+                            <i class="fas fa-building-circle-check text-amber-600"></i>
+                            <span>Solo con aval especializado</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Footer Informativo y Banner Integrado con Miniatura 3D -->
+                <div class="bg-gradient-to-r from-blue-600 to-indigo-700 rounded-2xl p-6 text-white flex flex-col md:flex-row items-center justify-between gap-6 shadow-md border-2 border-white">
+                    <div class="flex items-center gap-5">
+                        <img src="protocolos-oficiales-meduca.jpg" alt="Lámina Oficial de Protocolos MEDUCA" class="w-24 h-24 object-cover rounded-xl border-4 border-white shadow-lg cursor-pointer transform hover:scale-105 transition-transform flex-shrink-0" onclick="document.getElementById('modal-protocolo-img').classList.remove('hidden')" title="Click para ver en grande">
+                        <div>
+                            <h5 class="text-xl font-black mb-1">"Las medidas de prevención ayudan a reducir el daño y a salvar vidas"</h5>
+                            <p class="text-sm font-medium text-blue-100">Guía oficial aprobada para centros escolares por la Dirección Nacional de Educación Ambiental (MEDUCA).</p>
+                        </div>
+                    </div>
+                    <button onclick="document.getElementById('modal-protocolo-img').classList.remove('hidden')" class="btn-3d bg-white text-blue-900 hover:bg-blue-50 font-black py-3 px-6 rounded-xl text-sm border-2 border-blue-200 shadow flex items-center gap-2 whitespace-nowrap">
+                        <i class="fas fa-expand text-blue-600"></i>
+                        <span>Ampliar Lámina Completa</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Modal para Visualizar la Lámina Original PROTOCOLOS A SEGUIR -->
+            <div id="modal-protocolo-img" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 sm:p-6" onclick="if(event.target === this) this.classList.add('hidden')">
+                <div class="bg-white rounded-3xl max-w-4xl w-full p-6 shadow-2xl border-4 border-vibrant-blue relative max-h-[90vh] flex flex-col animate-pop-in">
+                    <div class="flex items-center justify-between pb-4 border-b border-gray-200 mb-4">
+                        <h4 class="text-xl sm:text-2xl font-black text-vibrant-blue flex items-center gap-2">
+                            <i class="fas fa-file-image text-vibrant-orange"></i>
+                            Lámina Original: Protocolos a Seguir (MEDUCA)
+                        </h4>
+                        <button onclick="document.getElementById('modal-protocolo-img').classList.add('hidden')" class="w-10 h-10 rounded-full bg-gray-100 hover:bg-red-100 text-gray-700 hover:text-vibrant-coral font-black text-xl flex items-center justify-center transition-colors">
+                            &times;
+                        </button>
+                    </div>
+                    <div class="overflow-auto flex-grow rounded-2xl bg-gray-100 border-2 border-gray-200 p-2 flex items-center justify-center">
+                        <img src="protocolos-oficiales-meduca.jpg" alt="Lámina Completa de Protocolos a Seguir MEDUCA" class="max-w-full max-h-full object-contain rounded-lg shadow">
+                    </div>
+                    <div class="pt-4 mt-2 flex justify-end gap-3">
+                        <a href="protocolos-oficiales-meduca.jpg" download="Protocolos_Oficiales_MEDUCA.jpg" class="btn-3d bg-vibrant-green hover:bg-green-600 text-white font-black py-2.5 px-5 rounded-xl text-sm border-2 border-white shadow inline-flex items-center gap-2">
+                            <i class="fas fa-download"></i> <span>Descargar Imagen</span>
+                        </a>
+                        <button onclick="document.getElementById('modal-protocolo-img').classList.add('hidden')" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2.5 px-5 rounded-xl text-sm transition-colors">
+                            Cerrar
+                        </button>
+                    </div>
+                </div>
+            </div>
+
             <!-- Consejos Claves MIENTRAS tiembla -->
             <div class="bg-gradient-to-r from-amber-50 to-orange-50 border-4 border-vibrant-orange rounded-3xl p-6 md:p-8 mb-14 shadow-lg">
                 <h4 class="text-2xl font-black text-vibrant-orange mb-4 text-center flex items-center justify-center gap-2">
@@ -443,21 +695,6 @@
                 </div>
             </div>
 
-            <!-- Minijuego Interactivo: Validación de Respuesta -->
-            <div class="bg-white rounded-[3rem] p-8 md:p-12 border-8 border-vibrant-cyan shadow-3d-card text-center max-w-4xl mx-auto">
-                <h3 class="text-3xl font-black text-vibrant-cyan mb-4"><i class="fas fa-gamepad mr-3 text-vibrant-orange"></i> ¡Recordemos nuestro simulacro!</h3>
-                <p class="text-xl md:text-2xl font-bold text-gray-700 mb-8">Si estás en el salón de clases y la tierra empieza a moverse, ¿cuál es la acción correcta?</p>
-                <div class="space-y-4">
-                    <button onclick="checkGame(false, '¡Cuidado! Salir corriendo durante el temblor puede causar tropiezos y que caigan objetos sobre ti. Lo primero siempre es agacharse, cubrirse y agarrarse.', 'fas fa-times-circle', 'text-vibrant-coral')" class="w-full text-left bg-gray-50 hover:bg-red-50 p-6 rounded-2xl text-lg md:text-xl font-bold border-4 border-transparent hover:border-vibrant-coral transition-colors h-auto focus:outline-none focus:ring-4 focus:ring-yellow-400 flex items-center gap-4">
-                        <span class="w-10 h-10 rounded-full bg-red-100 text-vibrant-coral flex items-center justify-center font-black flex-shrink-0">A</span>
-                        <span>Salir corriendo rápido hacia el patio sin esperar indicaciones de la maestra.</span>
-                    </button>
-                    <button onclick="checkGame(true, '¡Excelente! Agacharse, cubrirse bajo el pupitre, agarrarse fuerte y escuchar a tu docente es la regla de oro que salva vidas.', 'fas fa-star', 'text-vibrant-yellow')" class="w-full text-left bg-gray-50 hover:bg-green-50 p-6 rounded-2xl text-lg md:text-xl font-bold border-4 border-transparent hover:border-vibrant-green transition-colors h-auto focus:outline-none focus:ring-4 focus:ring-yellow-400 flex items-center gap-4">
-                        <span class="w-10 h-10 rounded-full bg-green-100 text-vibrant-green flex items-center justify-center font-black flex-shrink-0">B</span>
-                        <span>Agacharme, cubrirme bajo mi pupitre, agarrarme con fuerza y esperar las indicaciones de mi maestro.</span>
-                    </button>
-                </div>
-            </div>
         </section>
 
         <!-- MÓDULO 2: DESPUÉS DEL SISMO -->
@@ -544,85 +781,109 @@
             </div>
         </section>
 
-        <!-- MÓDULO 3: PUNTO DE ENCUENTRO ESCOLAR Y FAMILIAR -->
-        <section id="punto-encuentro" class="max-w-7xl mx-auto px-6 scroll-mt-24">
+        <!-- MÓDULO 3: GUÍA DE SOPORTE EMOCIONAL POST-SISMO Y RECURSOS DESCARGABLES -->
+        <section id="soporte-emocional" class="max-w-7xl mx-auto px-6 scroll-mt-24">
             <div class="text-center mb-12">
-                <h2 class="text-4xl md:text-6xl font-black text-vibrant-blue mb-6">Mi escuela y mi hogar tienen un punto de encuentro</h2>
+                <span class="inline-block bg-vibrant-coral text-white font-black text-sm md:text-base px-6 py-2 rounded-full uppercase tracking-wider mb-4 shadow border-2 border-white animate-bounce">
+                    <i class="fas fa-file-pdf mr-2"></i> Recursos Pedagógicos y Emocionales Listos para Descargar
+                </span>
+                <h2 class="text-4xl md:text-6xl font-black text-vibrant-blue mb-6">Guía de Soporte Emocional Post Sismo</h2>
                 <div class="bg-vibrant-cyan text-white rounded-3xl p-6 inline-block shadow-lg border-4 border-white transform -rotate-1 max-w-4xl mx-auto">
                     <p class="text-xl md:text-2xl font-bold">
-                        <i class="fas fa-map-marked-alt text-vibrant-yellow mr-3 text-3xl"></i> 
-                        ¡Conocerlo nos salva! Cada centro educativo en Panamá Oeste tiene un punto seguro acordado donde docentes y estudiantes se reúnen.
+                        <i class="fas fa-heart-circle-check text-vibrant-yellow mr-3 text-3xl"></i> 
+                        ¡Cuidamos el corazón y la mente de nuestros niños! Descarga los cuentos, guías docentes y cuadernillos de actividades para trabajar en el aula o en familia.
                     </p>
                 </div>
             </div>
 
-            <div class="bg-white rounded-[3rem] p-8 md:p-12 shadow-3d-card border-8 border-vibrant-blue grid lg:grid-cols-2 gap-10 items-stretch">
-                <!-- Checklist de Seguridad -->
-                <div class="flex flex-col">
-                    <div class="text-center mb-6">
-                        <i class="fas fa-school-flag text-7xl text-vibrant-orange icon-3d animate-float"></i>
-                    </div>
-                    
-                    <div class="bg-blue-50 p-6 rounded-2xl border-4 border-vibrant-blue shadow-inner flex-grow">
-                        <h3 class="text-2xl font-black text-vibrant-blue mb-4">Lista de Comprobación en la Escuela:</h3>
-                        <ul class="space-y-4 text-lg font-bold text-gray-700">
-                            <li class="flex items-start gap-4 cursor-pointer hover:text-vibrant-blue transition-colors" onclick="this.querySelector('input').click()">
-                                <input type="checkbox" class="w-6 h-6 mt-1 text-vibrant-blue rounded accent-vibrant-blue flex-shrink-0"> 
-                                <span>Sé con claridad dónde está ubicado el punto de encuentro de mi escuela.</span>
-                            </li>
-                            <li class="flex items-start gap-4 cursor-pointer hover:text-vibrant-blue transition-colors" onclick="this.querySelector('input').click()">
-                                <input type="checkbox" class="w-6 h-6 mt-1 text-vibrant-blue rounded accent-vibrant-blue flex-shrink-0"> 
-                                <span>Conozco la ruta de evacuación que corresponde a mi aula.</span>
-                            </li>
-                            <li class="flex items-start gap-4 cursor-pointer hover:text-vibrant-blue transition-colors" onclick="this.querySelector('input').click()">
-                                <input type="checkbox" class="w-6 h-6 mt-1 text-vibrant-blue rounded accent-vibrant-blue flex-shrink-0"> 
-                                <span>Sé que debo caminar en fila, sin correr, sin empujar y en silencio para oír al docente.</span>
-                            </li>
-                            <li class="flex items-start gap-4 cursor-pointer hover:text-vibrant-blue transition-colors" onclick="this.querySelector('input').click()">
-                                <input type="checkbox" class="w-6 h-6 mt-1 text-vibrant-blue rounded accent-vibrant-blue flex-shrink-0"> 
-                                <span>Entiendo que nunca debo regresar al salón por la mochila o celular.</span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                
-                <!-- Formulario de Práctica / Repaso -->
-                <div class="bg-gray-100 p-8 rounded-3xl border-4 border-dashed border-gray-300 relative card-3d flex flex-col justify-between">
+            <!-- Tarjetas de Recursos PDF para Niños, Docentes y Familias -->
+            <div class="grid md:grid-cols-3 gap-8 items-stretch">
+                <!-- Tarjeta 1: Guía Docente Biancheri -->
+                <div class="bg-white rounded-[2.5rem] p-8 shadow-3d-card border-8 border-vibrant-blue flex flex-col justify-between hover:-translate-y-2 transition-all">
                     <div>
-                        <h3 class="text-3xl font-black text-vibrant-dark mb-2">¿Dónde nos reunimos?</h3>
-                        <p class="text-gray-600 font-bold mb-6">Repasa estos datos con tu maestro y tu familia según el plan oficial de tu colegio.</p>
-                        
-                        <div class="space-y-4">
-                            <div>
-                                <label for="school-name-input" class="block text-sm font-black text-gray-700 mb-1">Nombre de tu escuela o colegio:</label>
-                                <input type="text" id="school-name-input" placeholder="Ej: Escuela Bilingüe de La Chorrera / Arraiján" class="w-full p-4 rounded-xl font-bold text-lg border-2 border-gray-300 focus:border-vibrant-cyan outline-none transition-colors" aria-label="Nombre de tu escuela">
-                            </div>
-                            <div>
-                                <label for="meeting-point-input" class="block text-sm font-black text-gray-700 mb-1">Punto seguro de reunión:</label>
-                                <input type="text" id="meeting-point-input" placeholder="Ej: Cancha techada / Patio central / Zona verde" class="w-full p-4 rounded-xl font-bold text-lg border-2 border-gray-300 focus:border-vibrant-cyan outline-none transition-colors" aria-label="Punto de encuentro">
-                            </div>
-                            
-                            <div class="bg-vibrant-coral/10 p-4 rounded-xl mt-4 border border-vibrant-coral/30">
-                                <p class="text-sm font-bold text-vibrant-coral flex items-start gap-2">
-                                    <i class="fas fa-exclamation-triangle mt-1 flex-shrink-0"></i>
-                                    <span>Importante: Consulta siempre el plan oficial coordinado con el MEDUCA y SINAPROC en tu plantel.</span>
-                                </p>
-                            </div>
+                        <div class="w-20 h-20 bg-blue-100 rounded-3xl flex items-center justify-center text-vibrant-blue text-4xl mb-6 mx-auto border-4 border-blue-200 shadow-inner">
+                            <i class="fas fa-book-open-reader"></i>
+                        </div>
+                        <span class="inline-block bg-blue-100 text-vibrant-blue font-black text-xs px-3 py-1 rounded-full uppercase tracking-wider mb-2">Docentes & Familias</span>
+                        <h3 class="text-2xl font-black text-vibrant-blue mb-3">El Puente de la Calma</h3>
+                        <p class="text-gray-600 font-bold mb-4 leading-relaxed">
+                            Guía estructurada de soporte emocional post-sismo. Contiene el Termómetro del Canal, la técnica de respiración Palma y Mar, y el Escudo de Solidaridad del Árbol Corotú.
+                        </p>
+                        <div class="bg-blue-50 rounded-2xl p-4 border-2 border-blue-200 mb-6 text-sm font-bold text-blue-900">
+                            <i class="fas fa-sparkles text-vibrant-yellow mr-2"></i> Formato: PDF Completo (11 páginas)
                         </div>
                     </div>
+                    <div class="space-y-3">
+                        <a href="Guia_de_Soporte_Emocional_Post-Sismo_Biancheri.pdf" download="Guia_de_Soporte_Emocional_Post-Sismo_Biancheri.pdf" class="btn-3d w-full bg-vibrant-blue hover:bg-blue-600 text-white font-black py-4 px-6 rounded-2xl text-lg border-2 border-white flex items-center justify-center gap-3 shadow-lg transition-transform focus:outline-none focus:ring-4 focus:ring-blue-300">
+                            <i class="fas fa-download"></i> <span>Descargar Guía</span>
+                        </a>
+                        <a href="Guia_de_Soporte_Emocional_Post-Sismo_Biancheri.pdf" target="_blank" rel="noopener noreferrer" class="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold py-2.5 px-4 rounded-xl text-sm flex items-center justify-center gap-2 transition-colors">
+                            <i class="fas fa-eye"></i> <span>Ver en el navegador</span>
+                        </a>
+                    </div>
+                </div>
 
-                    <button onclick="playSFX(600, 'sine', 0.2); showModal('¡Datos Repasados!', 'Conocer nuestro punto de encuentro nos ayuda a estar seguros, reunidos y tranquilos.', 'fas fa-map-marked-alt', 'text-vibrant-green')" class="btn-3d w-full bg-vibrant-green hover:bg-green-500 text-white font-black py-4 rounded-xl text-xl border-2 border-white mt-6 transition-colors focus:outline-none focus:ring-4 focus:ring-yellow-400">
-                        ¡Confirmar nuestro Punto Seguro!
-                    </button>
+                <!-- Tarjeta 2: Cuento Infantil Somos Pequeños -->
+                <div class="bg-white rounded-[2.5rem] p-8 shadow-3d-card border-8 border-vibrant-orange flex flex-col justify-between hover:-translate-y-2 transition-all">
+                    <div>
+                        <div class="w-20 h-20 bg-orange-100 rounded-3xl flex items-center justify-center text-vibrant-orange text-4xl mb-6 mx-auto border-4 border-orange-200 shadow-inner">
+                            <i class="fas fa-child-reaching"></i>
+                        </div>
+                        <span class="inline-block bg-orange-100 text-vibrant-orange font-black text-xs px-3 py-1 rounded-full uppercase tracking-wider mb-2">Para Niños & Niñas</span>
+                        <h3 class="text-2xl font-black text-vibrant-orange mb-3">Somos Pequeños</h3>
+                        <p class="text-gray-600 font-bold mb-4 leading-relaxed">
+                            Cuento ilustrado: <em>"¡Somos pequeños, pero nuestra valentía es grande!"</em>. Una historia tierna para leer juntos, normalizar el susto y fortalecer la valentía grupal.
+                        </p>
+                        <div class="bg-orange-50 rounded-2xl p-4 border-2 border-orange-200 mb-6 text-sm font-bold text-orange-900">
+                            <i class="fas fa-book-heart text-vibrant-coral mr-2"></i> Formato: Cuento Ilustrado a color
+                        </div>
+                    </div>
+                    <div class="space-y-3">
+                        <a href="Somos_Pequenos_Cuento_Sismo.pdf" download="Somos_Pequenos_Cuento_Sismo.pdf" class="btn-3d w-full bg-vibrant-orange hover:bg-orange-600 text-white font-black py-4 px-6 rounded-2xl text-lg border-2 border-white flex items-center justify-center gap-3 shadow-lg transition-transform focus:outline-none focus:ring-4 focus:ring-orange-300">
+                            <i class="fas fa-download"></i> <span>Descargar Cuento</span>
+                        </a>
+                        <a href="Somos_Pequenos_Cuento_Sismo.pdf" target="_blank" rel="noopener noreferrer" class="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold py-2.5 px-4 rounded-xl text-sm flex items-center justify-center gap-2 transition-colors">
+                            <i class="fas fa-eye"></i> <span>Ver en el navegador</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Tarjeta 3: Hojas de Colorear y Actividades Dilsia Morales -->
+                <div class="bg-white rounded-[2.5rem] p-8 shadow-3d-card border-8 border-vibrant-green flex flex-col justify-between hover:-translate-y-2 transition-all">
+                    <div>
+                        <div class="w-20 h-20 bg-green-100 rounded-3xl flex items-center justify-center text-vibrant-green text-4xl mb-6 mx-auto border-4 border-green-200 shadow-inner">
+                            <i class="fas fa-palette"></i>
+                        </div>
+                        <span class="inline-block bg-green-100 text-vibrant-green font-black text-xs px-3 py-1 rounded-full uppercase tracking-wider mb-2">Cuadernillo Imprimible</span>
+                        <h3 class="text-2xl font-black text-vibrant-green mb-3">Hojas de Expresión y Calma</h3>
+                        <p class="text-gray-600 font-bold mb-4 leading-relaxed">
+                            Cuadernillo de 10 láminas para colorear y expresar emociones por Dilsia Morales (Psicoteca Digital). Incluye ejercicios de respiración, monstruito Peluquín y plan de calma.
+                        </p>
+                        <div class="bg-green-50 rounded-2xl p-4 border-2 border-green-200 mb-6 text-sm font-bold text-green-900">
+                            <i class="fas fa-pencil-paintbrush text-vibrant-green mr-2"></i> Formato: Láminas listas para imprimir
+                        </div>
+                    </div>
+                    <div class="space-y-3">
+                        <a href="Hojas_de_Colorear_Despues_del_Temblor_Dilsia_Morales.pdf" download="Hojas_de_Colorear_Despues_del_Temblor_Dilsia_Morales.pdf" class="btn-3d w-full bg-vibrant-green hover:bg-green-600 text-white font-black py-4 px-6 rounded-2xl text-lg border-2 border-white flex items-center justify-center gap-3 shadow-lg transition-transform focus:outline-none focus:ring-4 focus:ring-green-300">
+                            <i class="fas fa-download"></i> <span>Descargar Cuadernillo</span>
+                        </a>
+                        <a href="Hojas_de_Colorear_Despues_del_Temblor_Dilsia_Morales.pdf" target="_blank" rel="noopener noreferrer" class="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold py-2.5 px-4 rounded-xl text-sm flex items-center justify-center gap-2 transition-colors">
+                            <i class="fas fa-eye"></i> <span>Ver en el navegador</span>
+                        </a>
+                    </div>
                 </div>
             </div>
-            
-            <!-- Actividad en Casa -->
-            <div class="mt-10 bg-vibrant-orange text-white rounded-[2rem] p-8 text-center shadow-3d-card border-4 border-white max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-6">
-                <i class="fas fa-house-chimney-medical text-6xl icon-3d flex-shrink-0"></i>
-                <div class="text-left">
-                    <h3 class="text-2xl md:text-3xl font-black mb-2">Compromiso en Familia</h3>
-                    <p class="text-lg md:text-xl font-bold leading-relaxed">Junto a tus padres o tutores, acuerden hoy mismo un punto de encuentro fuera de casa (un parque, patio o esquina segura) por si ocurre un sismo cuando están separados.</p>
+
+            <!-- Banner pedagógico de apoyo a docentes y padres -->
+            <div class="mt-12 bg-gradient-to-r from-vibrant-yellow to-amber-300 rounded-[2.5rem] p-8 md:p-10 shadow-3d-card border-4 border-white flex flex-col md:flex-row items-center gap-6 text-vibrant-dark">
+                <div class="w-24 h-24 rounded-full bg-white flex items-center justify-center text-vibrant-coral text-5xl shadow-md flex-shrink-0">
+                    <i class="fas fa-hands-holding-child"></i>
+                </div>
+                <div class="text-left flex-grow">
+                    <h3 class="text-2xl md:text-3xl font-black mb-2">¿Cómo utilizar estos recursos en casa o en la escuela?</h3>
+                    <p class="text-lg font-bold leading-relaxed opacity-95">
+                        Puedes imprimir estas fichas para que los niños pinten y expresen lo que sintieron, o leer juntos el cuento en el celular o tableta. Recuerda validar sus emociones: <em>"Sentir miedo es normal, y juntos aprendemos a estar en calma"</em>.
+                    </p>
                 </div>
             </div>
         </section>
@@ -635,15 +896,105 @@
             </div>
 
             <div class="flex flex-col lg:flex-row gap-12 items-center bg-white p-8 md:p-12 rounded-[3rem] shadow-3d-card border-8 border-vibrant-yellow">
-                <!-- Mochila 3D con Contador -->
-                <div class="w-full lg:w-1/3 flex justify-center relative">
-                    <div class="w-64 h-80 bg-vibrant-coral rounded-t-[5rem] rounded-b-3xl shadow-2xl border-8 border-white flex flex-col items-center justify-center relative z-10">
-                        <i class="fas fa-backpack text-8xl text-white opacity-90 mb-4 icon-3d"></i>
-                        <div class="bg-white text-vibrant-coral font-black text-3xl px-6 py-2 rounded-full shadow-inner border-4 border-vibrant-coral">
+                <!-- Ilustración Realista 3D de Mochila de Emergencia con Contador -->
+                <div class="w-full lg:w-1/3 flex flex-col items-center justify-center relative">
+                    <!-- SVG Ilustrado de Mochila de Emergencia de Rescate -->
+                    <div class="relative w-72 sm:w-80 h-96 flex items-center justify-center filter drop-shadow-2xl">
+                        <svg class="w-full h-full transform hover:scale-105 transition-transform duration-300" viewBox="0 0 320 380" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <!-- Degradados 3D para la tela y bolsillos -->
+                                <linearGradient id="backpackBody" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#FF5722"/>
+                                    <stop offset="40%" stop-color="#E64A19"/>
+                                    <stop offset="100%" stop-color="#BF360C"/>
+                                </linearGradient>
+                                <linearGradient id="pocketFront" x1="0%" y1="0%" x2="0%" y2="100%">
+                                    <stop offset="0%" stop-color="#FF7043"/>
+                                    <stop offset="100%" stop-color="#D84315"/>
+                                </linearGradient>
+                                <linearGradient id="topPocket" x1="0%" y1="0%" x2="0%" y2="100%">
+                                    <stop offset="0%" stop-color="#FF8A65"/>
+                                    <stop offset="100%" stop-color="#E64A19"/>
+                                </linearGradient>
+                                <linearGradient id="strapGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                    <stop offset="0%" stop-color="#374151"/>
+                                    <stop offset="50%" stop-color="#4B5563"/>
+                                    <stop offset="100%" stop-color="#1F2937"/>
+                                </linearGradient>
+                                <linearGradient id="badgeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#FEE2E2"/>
+                                    <stop offset="100%" stop-color="#FFFFFF"/>
+                                </linearGradient>
+                                <filter id="shadow3D" x="-10%" y="-10%" width="130%" height="130%">
+                                    <feDropShadow dx="0" dy="12" stdDeviation="10" flood-opacity="0.3"/>
+                                </filter>
+                            </defs>
+
+                            <!-- Asa Superior Acolchada -->
+                            <path d="M115 50 C115 22, 205 22, 205 50" stroke="#1F2937" stroke-width="16" stroke-linecap="round" fill="none"/>
+                            <path d="M125 50 C125 32, 195 32, 195 50" stroke="#FBBF24" stroke-width="6" stroke-linecap="round" fill="none"/>
+
+                            <!-- Tirantes Superiores Traseros -->
+                            <path d="M75 90 C65 60, 100 45, 120 52" stroke="#374151" stroke-width="14" stroke-linecap="round" fill="none"/>
+                            <path d="M245 90 C255 60, 220 45, 200 52" stroke="#374151" stroke-width="14" stroke-linecap="round" fill="none"/>
+
+                            <!-- Cuerpo Principal de la Mochila -->
+                            <rect x="50" y="55" width="220" height="280" rx="65" fill="url(#backpackBody)" filter="url(#shadow3D)"/>
+
+                            <!-- Costuras y Relieves Laterales 3D -->
+                            <path d="M56 120 Q50 200 56 280" stroke="#FF8A65" stroke-width="4" stroke-linecap="round" opacity="0.6"/>
+                            <path d="M264 120 Q270 200 264 280" stroke="#871C0C" stroke-width="4" stroke-linecap="round" opacity="0.8"/>
+
+                            <!-- Bolsillos Laterales de Malla para Botellas de Agua -->
+                            <rect x="36" y="180" width="22" height="95" rx="10" fill="#374151" stroke="#1F2937" stroke-width="2"/>
+                            <path d="M36 200 H58 M36 220 H58 M36 240 H58" stroke="#9CA3AF" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
+                            <rect x="262" y="180" width="22" height="95" rx="10" fill="#374151" stroke="#1F2937" stroke-width="2"/>
+                            <path d="M262 200 H284 M262 220 H284 M262 240 H284" stroke="#9CA3AF" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
+
+                            <!-- Bolsillo Superior con Cierre de Cremallera -->
+                            <rect x="75" y="75" width="170" height="75" rx="28" fill="url(#topPocket)" stroke="#FFFFFF" stroke-width="3"/>
+                            <line x1="95" y1="92" x2="225" y2="92" stroke="#1F2937" stroke-width="5" stroke-linecap="round" stroke-dasharray="8 4"/>
+                            <circle cx="160" cy="92" r="6" fill="#FBBF24" stroke="#1F2937" stroke-width="2"/>
+
+                            <!-- Bolsillo Frontal Grande de Emergencia -->
+                            <rect x="68" y="165" width="184" height="155" rx="35" fill="url(#pocketFront)" stroke="#FFFFFF" stroke-width="4"/>
+                            <line x1="88" y1="182" x2="232" y2="182" stroke="#1F2937" stroke-width="5" stroke-linecap="round" stroke-dasharray="8 4"/>
+
+                            <!-- Cinta Reflectiva de Seguridad Cruzada (3M / Emergencia) -->
+                            <rect x="68" y="240" width="184" height="24" fill="#FBBF24" opacity="0.95"/>
+                            <rect x="68" y="244" width="184" height="16" fill="#FEF08A"/>
+                            <line x1="68" y1="240" x2="252" y2="240" stroke="#FFFFFF" stroke-width="2"/>
+                            <line x1="68" y1="264" x2="252" y2="264" stroke="#FFFFFF" stroke-width="2"/>
+
+                            <!-- Escudo Médico / Cruz de Primeros Auxilios 3D -->
+                            <circle cx="160" cy="210" r="28" fill="url(#badgeGrad)" stroke="#E11D48" stroke-width="4" filter="url(#shadow3D)"/>
+                            <!-- Cruz Roja Centrada -->
+                            <rect x="153" y="194" width="14" height="32" rx="3" fill="#E11D48"/>
+                            <rect x="144" y="203" width="32" height="14" rx="3" fill="#E11D48"/>
+
+                            <!-- Hebillas y Correas Inferiores -->
+                            <rect x="95" y="320" width="18" height="28" rx="5" fill="url(#strapGrad)"/>
+                            <rect x="91" y="332" width="26" height="8" rx="2" fill="#FBBF24" stroke="#1F2937" stroke-width="1.5"/>
+                            <rect x="207" y="320" width="18" height="28" rx="5" fill="url(#strapGrad)"/>
+                            <rect x="203" y="332" width="26" height="8" rx="2" fill="#FBBF24" stroke="#1F2937" stroke-width="1.5"/>
+
+                            <!-- Etiqueta Oficial SOS -->
+                            <rect x="130" y="280" width="60" height="22" rx="6" fill="#1F2937" stroke="#FBBF24" stroke-width="2"/>
+                            <text x="160" y="295" font-family="Arial, sans-serif" font-weight="900" font-size="12" fill="#FBBF24" text-anchor="middle" letter-spacing="2">72 HORAS</text>
+                        </svg>
+
+                        <!-- Indicador Flotante 3D del Contador de Artículos -->
+                        <div class="absolute -bottom-4 bg-white text-vibrant-coral font-black text-2xl md:text-3xl px-6 py-2 rounded-full shadow-2xl border-4 border-vibrant-coral flex items-center gap-2 animate-bounce">
+                            <i class="fas fa-box-open text-xl text-vibrant-yellow"></i>
                             <span id="backpack-count">0</span> / 8
                         </div>
                     </div>
-                    <div class="absolute inset-0 bg-vibrant-yellow blur-3xl opacity-30 z-0"></div>
+
+                    <!-- Leyenda pedagógica de la mochila -->
+                    <span class="mt-8 text-xs font-black uppercase tracking-wider text-vibrant-orange bg-orange-100 px-4 py-1.5 rounded-full border border-orange-200">
+                        <i class="fas fa-kit-medical mr-1"></i> Mochila para 72 horas
+                    </span>
+                    <div class="absolute inset-0 bg-vibrant-yellow blur-3xl opacity-20 pointer-events-none -z-10"></div>
                 </div>
 
                 <!-- Elementos Interactivos -->
@@ -889,17 +1240,38 @@
             </div>
         </section>
 
-        <!-- MÓDULO 9: ÁRBOL DE LA ESPERANZA (INTERACTIVO LOCALSTORAGE) -->
+        <!-- MÓDULO 9: ÁRBOL DE LA ESPERANZA (INTERACTIVO LOCALSTORAGE Y ARRASTRAR / SOLTAR) -->
         <section id="arbol-esperanza" class="max-w-7xl mx-auto px-6 pb-10 scroll-mt-24">
             <div class="bg-white rounded-[4rem] p-6 md:p-12 shadow-3d-card border-8 border-vibrant-green text-center relative overflow-hidden">
+                <span class="inline-block bg-vibrant-green text-white font-black text-xs sm:text-sm px-6 py-2 rounded-full uppercase tracking-wider mb-4 shadow border-2 border-white">
+                    <i class="fas fa-hand-pointer mr-2"></i> ¡Toca o Arrastra tus Hojas de Esperanza!
+                </span>
                 <h2 class="text-4xl md:text-6xl font-black text-vibrant-green mb-4">Nuestro Árbol de la Esperanza</h2>
-                <p class="text-lg md:text-2xl font-bold text-gray-600 mb-8 max-w-3xl mx-auto">
-                    Toca las hojas para leer los mensajes de ánimo, o escribe tu propio pensamiento para que florezca en el árbol.
+                <p class="text-lg md:text-2xl font-bold text-gray-600 mb-6 max-w-3xl mx-auto">
+                    Arrastra cualquiera de las hojas mágicas hacia la copa del árbol para escuchar su sonido encantado, o escribe tu propio pensamiento.
                 </p>
+
+                <!-- Bandeja de Hojas Mágicas para Arrastrar (Drag & Drop) -->
+                <div class="bg-gradient-to-r from-emerald-50 via-green-50 to-teal-50 p-6 md:p-8 rounded-[2.5rem] border-4 border-dashed border-green-300 mb-8 max-w-4xl mx-auto shadow-sm">
+                    <div class="flex items-center justify-between mb-4 flex-wrap gap-2">
+                        <span class="text-sm md:text-base font-black text-green-800 flex items-center gap-2">
+                            <i class="fas fa-wand-magic-sparkles text-vibrant-yellow text-xl"></i>
+                            Elige una hoja y arrástrala hacia el árbol (o haz clic sobre ella):
+                        </span>
+                        <span class="text-xs font-bold bg-white text-green-700 px-3 py-1 rounded-full border border-green-200">
+                            Arrastra y suelta
+                        </span>
+                    </div>
+
+                    <!-- Contenedor de Hojas Arrastrables -->
+                    <div id="drag-leaves-palette" class="flex flex-wrap justify-center items-center gap-3 md:gap-4 py-2">
+                        <!-- Opciones precargadas para arrastrar -->
+                    </div>
+                </div>
                 
                 <!-- Controles de Entrada y Reinicio -->
                 <div class="flex flex-col md:flex-row justify-center items-center gap-4 mb-10 z-20 relative px-4 max-w-4xl mx-auto">
-                    <input type="text" id="leaf-input" maxlength="40" placeholder="Escribe un mensaje corto de esperanza..." class="w-full md:w-auto flex-grow p-4 rounded-full font-bold text-lg border-4 border-green-200 focus:border-vibrant-green outline-none shadow-inner bg-gray-50 focus:ring-4 focus:ring-green-100" aria-label="Escribe tu mensaje para el árbol">
+                    <input type="text" id="leaf-input" maxlength="40" placeholder="O escribe tu propio mensaje de esperanza..." class="w-full md:w-auto flex-grow p-4 rounded-full font-bold text-lg border-4 border-green-200 focus:border-vibrant-green outline-none shadow-inner bg-gray-50 focus:ring-4 focus:ring-green-100" aria-label="Escribe tu mensaje para el árbol">
                     
                     <button onclick="addCustomLeaf()" class="btn-3d bg-vibrant-green hover:bg-green-500 text-white font-black py-4 px-8 rounded-full text-xl shadow-md border-2 border-white w-full sm:w-auto flex-shrink-0 focus:outline-none focus:ring-4 focus:ring-yellow-400">
                         <i class="fas fa-leaf mr-2"></i> Colgar Hoja
@@ -912,7 +1284,7 @@
 
                 <!-- Estructura del Árbol 3D Flexible -->
                 <div class="relative w-full mx-auto flex flex-col items-center z-10 pt-4">
-                    <!-- Copa del árbol -->
+                    <!-- Copa del árbol (Zona de Soltar) -->
                     <div class="tree-canopy-container">
                         <div id="tree-canopy" class="tree-canopy-bg min-h-[320px] md:min-h-[420px] flex flex-wrap justify-center items-center content-center p-8 md:p-12 gap-3 md:gap-4 shadow-2xl transition-all">
                             <!-- Inyectado vía JavaScript -->
@@ -959,9 +1331,9 @@
                 <div class="grid lg:grid-cols-2 gap-8 relative z-10 mb-12">
                     <!-- Preguntas para conversar en familia -->
                     <div class="bg-white p-8 rounded-3xl shadow-md border-4 border-vibrant-cyan flex flex-col h-full">
-                        <h3 class="text-2xl md:text-3xl font-black text-vibrant-cyan mb-4"><i class="fas fa-book-open mr-3"></i> Un cuento, un abrazo y mil esperanzas</h3>
+                        <h3 class="text-2xl md:text-3xl font-black text-vibrant-cyan mb-4"><i class="fas fa-comments mr-3"></i> Preguntas para conversar en familia</h3>
                         <p class="text-lg font-bold text-gray-600 mb-6 flex-grow">
-                            Invita a tu familia a repasar el cuento de nuestro mural. Al terminar, compartan estas preguntas sencillas:
+                            Invita a tu familia a dialogar juntos con estas preguntas sencillas:
                         </p>
                         <ul class="space-y-3 text-lg font-bold text-gray-700 mb-8 ml-2">
                             <li class="flex items-start gap-3"><i class="fas fa-comment-dots text-vibrant-yellow mt-1"></i> ¿Qué sentiste durante el sismo del 09 de octubre?</li>
@@ -1504,7 +1876,7 @@
             speak(text);
         }
 
-        // --- ÁRBOL DE LA ESPERANZA (LOCALSTORAGE) ---
+        // --- ÁRBOL DE LA ESPERANZA (LOCALSTORAGE & DRAG AND DROP CON SONIDO) ---
         const TREE_STORAGE_KEY = 'mural_panama_oeste_hojas';
         const DEFAULT_LEAVES = [
             { text: "Juntos somos más fuertes", color: "#FBBF24" },
@@ -1515,7 +1887,46 @@
             { text: "Agáchate, cúbrete y agárrate", color: "#F97316" }
         ];
 
+        // Opciones listas para que los niños arrastren al árbol
+        const DRAGGABLE_OPTIONS = [
+            { text: "¡Somos valientes y unidos!", color: "#10B981", icon: "fa-star" },
+            { text: "Mi escuela me protege", color: "#1D4ED8", icon: "fa-school" },
+            { text: "Abrazar a quien tiene miedo", color: "#F43F5E", icon: "fa-heart" },
+            { text: "Respiro hondo y mantengo la calma", color: "#06B6D4", icon: "fa-wind" },
+            { text: "Siembra amor en tu familia", color: "#FBBF24", icon: "fa-seedling" },
+            { text: "Cuidar a mis amiguitos", color: "#F97316", icon: "fa-hands-holding" }
+        ];
+
         let userLeaves = [];
+
+        // Sonido armónico encantado tipo xilófono / arpa mágica
+        function playMagicalLeafSound() {
+            if(isMuted) return;
+            initAudio();
+            if(!audioCtx) return;
+
+            // Secuencia de campanas armónicas ascendentes (Pentatónica mayor: C5, E5, G5, B5, C6)
+            const chimeNotes = [523.25, 659.25, 783.99, 987.77, 1046.50];
+            chimeNotes.forEach((freq, idx) => {
+                setTimeout(() => {
+                    try {
+                        const osc = audioCtx.createOscillator();
+                        const gain = audioCtx.createGain();
+                        osc.type = 'sine';
+                        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+
+                        // Envolvente tipo campana cristalina / chime
+                        gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+                        gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.6);
+
+                        osc.connect(gain);
+                        gain.connect(audioCtx.destination);
+                        osc.start();
+                        osc.stop(audioCtx.currentTime + 0.6);
+                    } catch(e) {}
+                }, idx * 65);
+            });
+        }
 
         function initTree() {
             const saved = localStorage.getItem(TREE_STORAGE_KEY);
@@ -1526,11 +1937,102 @@
                     userLeaves = []; 
                 }
             }
+            renderDraggablePalette();
             renderTree();
+            setupCanopyDropzone();
+        }
+
+        function renderDraggablePalette() {
+            const palette = document.getElementById('drag-leaves-palette');
+            if(!palette) return;
+            palette.innerHTML = '';
+
+            DRAGGABLE_OPTIONS.forEach((item, index) => {
+                const optBtn = document.createElement('div');
+                optBtn.setAttribute('draggable', 'true');
+                optBtn.className = 'leaf-shape leaf-draggable text-white font-black py-2.5 px-4 text-xs sm:text-sm shadow-md border-2 border-white flex items-center gap-2 select-none';
+                optBtn.style.backgroundColor = item.color;
+                optBtn.innerHTML = `<i class="fas ${item.icon} text-sm"></i> <span>${item.text}</span>`;
+                optBtn.title = "Arrastra esta hoja al árbol o haz clic para colocarla";
+
+                // Eventos de Drag para Desktop
+                optBtn.addEventListener('dragstart', (e) => {
+                    e.dataTransfer.setData('text/plain', JSON.stringify(item));
+                    optBtn.classList.add('is-dragging');
+                    playSFX(480, 'sine', 0.1);
+                });
+
+                optBtn.addEventListener('dragend', () => {
+                    optBtn.classList.remove('is-dragging');
+                    const canopy = document.getElementById('tree-canopy');
+                    if(canopy) canopy.classList.remove('canopy-dropzone-active');
+                });
+
+                // Soporte táctil (Touch) para móviles/tablets
+                let touchMoved = false;
+                optBtn.addEventListener('touchstart', (e) => {
+                    touchMoved = false;
+                }, {passive: true});
+
+                optBtn.addEventListener('touchmove', (e) => {
+                    touchMoved = true;
+                }, {passive: true});
+
+                // Click o Tap directo como alternativa accesible
+                optBtn.addEventListener('click', () => {
+                    attachLeafToTree(item.text, item.color);
+                });
+
+                palette.appendChild(optBtn);
+            });
+        }
+
+        function setupCanopyDropzone() {
+            const canopy = document.getElementById('tree-canopy');
+            if(!canopy) return;
+
+            canopy.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                canopy.classList.add('canopy-dropzone-active');
+            });
+
+            canopy.addEventListener('dragleave', (e) => {
+                canopy.classList.remove('canopy-dropzone-active');
+            });
+
+            canopy.addEventListener('drop', (e) => {
+                e.preventDefault();
+                canopy.classList.remove('canopy-dropzone-active');
+                try {
+                    const rawData = e.dataTransfer.getData('text/plain');
+                    if(rawData) {
+                        const leafData = JSON.parse(rawData);
+                        attachLeafToTree(leafData.text, leafData.color);
+                    }
+                } catch(err) {
+                    console.error("Error al soltar hoja:", err);
+                }
+            });
+        }
+
+        function attachLeafToTree(text, color) {
+            userLeaves.push({ text: text, color: color });
+            localStorage.setItem(TREE_STORAGE_KEY, JSON.stringify(userLeaves));
+            
+            const canopy = document.getElementById('tree-canopy');
+            createLeafElement(text, color, canopy);
+
+            // Sonido mágico y lindo de campanas
+            playMagicalLeafSound();
+
+            // Mensaje de felicitación y retroalimentación inmediata
+            showModal("¡Hoja florecida en el árbol!", text, "fas fa-leaf", "text-vibrant-green");
+            speak(text);
         }
 
         function renderTree() {
             const canopy = document.getElementById('tree-canopy');
+            if(!canopy) return;
             canopy.innerHTML = ''; 
             
             const allLeaves = [...DEFAULT_LEAVES, ...userLeaves];
@@ -1551,6 +2053,7 @@
             leaf.innerText = displayText;
             
             leaf.onclick = () => {
+                playMagicalLeafSound();
                 const colorClass = color === '#FBBF24' ? 'text-vibrant-yellow' : 'text-vibrant-green';
                 showModal('Mensaje en el árbol', word, 'fas fa-leaf', colorClass);
                 speak(word);
@@ -1566,15 +2069,8 @@
             const text = input.value.trim();
             if(text.length > 0) {
                 const color = leafColors[Math.floor(Math.random() * leafColors.length)];
-                
-                userLeaves.push({ text: text, color: color });
-                localStorage.setItem(TREE_STORAGE_KEY, JSON.stringify(userLeaves));
-                
-                const canopy = document.getElementById('tree-canopy');
-                createLeafElement(text, color, canopy);
-                
+                attachLeafToTree(text, color);
                 input.value = '';
-                playSFX(700 + (Math.random()*300), 'triangle', 0.1);
             }
         }
 
@@ -1586,6 +2082,7 @@
                     localStorage.removeItem(TREE_STORAGE_KEY);
                     userLeaves = [];
                     renderTree();
+                    playSFX(500, 'sine', 0.2);
                     showModal("¡Árbol reiniciado!", "Nuestro árbol está listo para recibir nuevos mensajes de esperanza.", "fas fa-leaf", "text-vibrant-green");
                 }
             );
@@ -1613,6 +2110,16 @@
             renderFrasco();
         }
 
+        function escapeHtml(str) {
+            if(!str) return '';
+            return str
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        }
+
         function renderFrasco() {
             const container = document.getElementById('frasco-mensajes');
             container.innerHTML = '';
@@ -1625,8 +2132,9 @@
             userFrascoMessages.forEach((msg, index) => {
                 const div = document.createElement('div');
                 div.className = 'bg-white p-6 rounded-2xl shadow-sm border-l-8 border-vibrant-coral transform hover:-translate-y-1 transition-transform relative text-left h-full';
+                const safeText = escapeHtml(msg.text);
                 div.innerHTML = `
-                    <p class="font-bold text-gray-700 text-lg pr-6">"${msg.text}"</p>
+                    <p class="font-bold text-gray-700 text-lg pr-6">"${safeText}"</p>
                     <button onclick="deleteFrascoMessage(${index})" class="absolute top-3 right-3 text-gray-300 hover:text-vibrant-coral focus:outline-none transition-colors" aria-label="Borrar mensaje" title="Borrar mensaje">
                         <i class="fas fa-times-circle text-xl"></i>
                     </button>
